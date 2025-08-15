@@ -7,15 +7,35 @@ import "./Login.scss";
 import { IoEye } from "react-icons/io5";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FormattedMessage } from "react-intl";
+import { postLogin } from '../../services/userService'
 
 const Login = () => {
   const dispatch = useDispatch();
   const language = useSelector((state) => state.app.language);
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const handleLogin = () => {
-    alert(`user: ${username} pass: ${password}`)
+  const [errorMessage, setErrorMessage] = useState('')
+  const handleLogin = async () => {
+    try {
+
+
+      let res = await postLogin(email, password)
+      if (res && res.errorCode !== 0) {
+        setErrorMessage(res.message)
+      }
+      if (res && res.errorCode === 0) {
+        dispatch(actions.userLoginSuccess(res.user))
+        // userLoginSuccess(res.user)
+        console.log(res.message)
+      }
+    }
+    catch (e) {
+      if (e.response && e.response.data) {
+        setErrorMessage(e.response.data.message);
+      }
+    }
+
 
   };
 
@@ -27,14 +47,14 @@ const Login = () => {
     <div className="login-background">
       <div className="login-container">
         <div className="login-content row">
-          <div className="col-10 text-center">Login</div>
+          <div className="col-12 text-center">Login</div>
 
           <div className="col-12 form-group">
-            <label>Username</label>
+            <label>Email</label>
             <input type="text"
               className="form-control"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <div className="col-12 form-group">
@@ -52,6 +72,7 @@ const Login = () => {
               </div>
             </div>
 
+            <div className='col-12'>{errorMessage}</div>
             <div className="col-12 d-flex justify-content-center mt-2">
               <button
                 className="btn-login btn btn-outline-secondary"
@@ -80,4 +101,13 @@ const Login = () => {
   );
 };
 
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     navigate: (path) => dispatch(push(path)),
+//     adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
+//     adminLoginFail: () => dispatch(actions.adminLoginFail()),
+//     userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo))
+//   };
+// };
 export default Login;
