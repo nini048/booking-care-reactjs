@@ -1,0 +1,38 @@
+.manage-users {
+
+  // đúng với JSX
+  .users-table {
+    .action-buttons {
+      display: flex;
+      gap: 5px;
+
+      .btn {
+        padding: 5px 8px; // vừa đủ, nhỏ gọn
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+      }
+
+      .btn-edit {
+        border-color: #6c757d; // outline-secondary màu chuẩn bootstrap
+        color: #6c757d;
+      }
+
+      .btn-delete {
+        border-color: #ffc107; // outline-warning màu chuẩn bootstrap
+        color: #ffc107;
+      }
+
+      .btn-edit:hover {
+        background-color: #6c757d;
+        color: white;
+      }
+
+      .btn-delete:hover {
+        background-color: #ffc107;
+        color: white;
+      }
+    }
+  }
+}

@@ -3,6 +3,10 @@ import React, { Component, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllUsers } from '../../services/userService';
+import { FiEdit3 } from "react-icons/fi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import "./UserManage.scss"
+
 const UserManage = (props) => {
 
   const [users, setUsers] = useState([])
@@ -61,8 +65,16 @@ const UserManage = (props) => {
                   {user.address}
                 </td>
                 <td>
-                  <a href="" role='button' className="btn btn-outline-secondary">Edit</a>
-                  <a href="" className="btn btn-outline-danger" role='button'>Delete</a>
+                  <div className='action-buttons'>
+                    <button className="btn-edit btn btn-outline-secondary btn-sm">
+                      <FiEdit3 />
+                    </button>
+                    <button className="btn-delete btn btn-outline-warning btn-sm">
+                      <RiDeleteBin6Line />
+                    </button>
+
+                  </div>
+
                 </td>
               </tr>
             ))}
