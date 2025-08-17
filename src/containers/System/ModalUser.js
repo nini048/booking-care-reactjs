@@ -1,5 +1,5 @@
 
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
@@ -9,8 +9,45 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import { postNewuser } from '../../services/userService';
 const ModalUser = (props) => {
-  const { show, setShow, toggle } = props
+  const { show, setShow, toggle, setIsCreateUser, isCreateUser } = props
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [firstname, setFirstname] = useState('')
+  const [lastname, setLastname] = useState('')
+  const [address, setAddress] = useState('')
+  const handleAddNewUser = async () => {
+    try {
+
+      console.log("email:", email);
+      console.log("password:", password);
+      console.log("firstname:", firstname);
+      console.log("lastname:", lastname);
+      console.log("address:", address);
+      let res = await postNewuser({ email, password, firstname, lastname, address })
+      console.log('>>>res: ', res)
+      if (res && res.errorCode === 0) {
+
+        setIsCreateUser(true)
+        setEmail('')
+        setPassword('')
+        setFirstname('')
+        setLastname('')
+        setAddress('')
+      }
+      if (res && res.errorCode === 0) {
+        toggle()
+      }
+      else if (res) {
+        alert(res.message)
+      }
+    }
+    catch (e) {
+      console.log('>>>error: ', e)
+    }
+  }
+
   return (
     <Modal
       className='modal-user-container'
@@ -24,27 +61,35 @@ const ModalUser = (props) => {
         <div className='modal-user-body'>
           <div className='input-container'>
             <label>Email</label>
-            <input type='email' />
+            <input type='email'
+              onChange={(e) => { setEmail(e.target.value) }}
+            />
           </div>
           <div className='input-container'>
             <label>Password</label>
-            <input type='password' />
+            <input type='password'
+              onChange={(e) => { setPassword(e.target.value) }}
+
+            />
           </div>
           <div className='input-container'>
             <label>Firstname</label>
-            <input type='text' />
+            <input type='text'
+              onChange={(e) => { setFirstname(e.target.value) }}
+            />
           </div>
           <div className='input-container'>
             <label>Lastname</label>
-            <input type='text' />
+            <input type='text'
+              onChange={(e) => { setLastname(e.target.value) }}
+            />
           </div>
           <div className='input-container max-width-input'>
             <label>Address</label>
-            <input type='text' />
+            <input type='text'
+              onChange={(e) => { setAddress(e.target.value) }}
+            />
           </div>
-
-
-
         </div>
 
       </ModalBody>
@@ -52,7 +97,9 @@ const ModalUser = (props) => {
         <Button className='px-3' color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button className='px-3' color="primary" onClick={toggle}>
+        <Button className='px-3'
+          color="primary"
+          onClick={() => { handleAddNewUser() }}>
           Save
         </Button>
 
