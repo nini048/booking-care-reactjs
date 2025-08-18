@@ -18,15 +18,22 @@ const ModalUser = (props) => {
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
   const [address, setAddress] = useState('')
+  const [phonenumber, setPhonenumber] = useState('')
+  const [role, setRole] = useState(1)
+  const [gender, setGender] = useState('')
   const handleAddNewUser = async () => {
     try {
 
-      console.log("email:", email);
-      console.log("password:", password);
-      console.log("firstname:", firstname);
-      console.log("lastname:", lastname);
-      console.log("address:", address);
-      let res = await postNewuser({ email, password, firstname, lastname, address })
+      let res = await postNewuser({
+        email,
+        password,
+        firstname,
+        lastname,
+        address,
+        phonenumber,
+        role,
+        gender
+      })
       console.log('>>>res: ', res)
 
       if (res && res.errorCode === 0) {
@@ -35,6 +42,9 @@ const ModalUser = (props) => {
         setFirstname('')
         setLastname('')
         setAddress('')
+        setPhonenumber('')
+        setGender('MALE')
+        setRole(1)
         emitter.emit("EVENT_RELOAD_USERS");
         toggle()
       }
@@ -55,7 +65,7 @@ const ModalUser = (props) => {
       size='md'
       centered
     >
-      <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+      <ModalHeader toggle={toggle}>Add user</ModalHeader>
       <ModalBody>
         <div className='modal-user-body'>
           <div className='input-container'>
@@ -83,20 +93,42 @@ const ModalUser = (props) => {
               onChange={(e) => { setLastname(e.target.value) }}
             />
           </div>
-          <div className='input-container max-width-input'>
+          <div className='input-container'>
             <label>Address</label>
             <input type='text'
               onChange={(e) => { setAddress(e.target.value) }}
             />
           </div>
+          <div className='input-container'>
+            <label>Phonenumber</label>
+            <input type='text'
+              onChange={(e) => { setPhonenumber(e.target.value) }}
+            />
+          </div>
+          <div className='input-container'>
+            <label>Gender</label>
+            <select value={gender} onChange={(e) => setGender(e.target.value)}>
+              <option value="0">FEMALE</option>
+              <option value="1">MALE</option>
+            </select>
+          </div>
+          <div className='input-container'>
+            <label>Role</label>
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="1">ADMIN</option>
+              <option value="2">DOCTOR</option>
+              <option value="3">PATIENT</option>
+            </select>
+          </div>
+
         </div>
 
       </ModalBody>
       <ModalFooter>
-        <Button className='px-3' color="secondary" onClick={toggle}>
+        <Button className='px-2' color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button className='px-3'
+        <Button className='px-2'
           color="primary"
           onClick={() => { handleAddNewUser() }}>
           Save

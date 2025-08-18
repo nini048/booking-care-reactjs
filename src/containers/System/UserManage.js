@@ -5,6 +5,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import "./UserManage.scss";
 import ModalDeleteUser from './ModalDeleteUser';
+import ModalEditUser from './ModalEditUser'
 import { emitter } from '../../utils/emitter';
 
 const UserManage = () => {
@@ -13,6 +14,30 @@ const UserManage = () => {
   const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
   const [showModalEditUser, setShowModalEditUser] = useState(false);
   const [user, setUser] = useState({})
+  const getRoleName = (roleId) => {
+    switch (roleId) {
+      case '1':
+        return "ADMIN";
+      case '2':
+        return "DOCTOR";
+      default:
+        return "PATIENT";
+    }
+  };
+  const getGenderName = (gender) => {
+    switch (gender) {
+      case 1:
+      case "1":
+        return "MALE";
+      case 0:
+      case "0":
+        return "FEMALE";
+      default:
+        return "UNKNOWN";
+    }
+  };
+
+
   const toggleModalCreateUser = () => {
     setShowModalCreateUser(!showModalCreateUser);
   };
@@ -26,6 +51,10 @@ const UserManage = () => {
   }
   const handleDeleteUser = (userData) => {
     toggleModalDeleteUser();
+    setUser(userData)
+  };
+  const handleEditUser = (userData) => {
+    toggleModalEditUser();
     setUser(userData)
   };
   const fetchUsers = async () => {
@@ -75,6 +104,9 @@ const UserManage = () => {
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Address</th>
+                <th>Phonenumber</th>
+                <th>Gender</th>
+                <th>Role</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -86,11 +118,16 @@ const UserManage = () => {
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
                   <td>{user.address}</td>
+                  <td>{user.phoneNumber}</td>
+                  <td>{getGenderName(user.gender)}</td>
+
+                  <td>{getRoleName(user.roleId)}</td>
+
                   <td>
                     <div className='action-buttons'>
                       <button
                         className="btn-edit btn btn-outline-secondary btn-sm"
-                        onClick={() => { toggleModalEditUser() }}
+                        onClick={() => { handleEditUser(user) }}
                       >
                         <FiEdit3 />
                       </button>
@@ -121,6 +158,14 @@ const UserManage = () => {
         setUser={setUser}
 
       />
+
+      <ModalEditUser
+        show={showModalEditUser}
+        toggle={toggleModalEditUser}
+        user={user}
+        setUser={setUser}
+      />
+
     </div>
   );
 };

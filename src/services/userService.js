@@ -12,3 +12,6 @@ export const postNewuser = (user) => {
 export const deleteUser = (id) => {
   return axios.delete(`/api/delete-user/${id}`)
 }
+export const putEditUser = (id, data) => {
+  return axios.put(`/api/edit-user/${id}`, data)
+}
