@@ -1,67 +1,129 @@
 .manage-users {
+  font-family: 'Inter', sans-serif;
+  color: #333333;
 
-  // đúng với JSX
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
   .users-table {
+    .table {
+      border-collapse: separate;
+      border-spacing: 0 8px; // tạo khoảng cách giữa các hàng
+
+      thead {
+        background: #f9f9f9;
+
+        th {
+          font-weight: 600;
+          font-size: 14px;
+          color: #333;
+          border-bottom: 1px solid #eaeaea;
+        }
+      }
+
+      tbody tr {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+        td,
+        th {
+          vertical-align: middle;
+          font-size: 14px;
+          padding: 10px;
+        }
+      }
+    }
 
     .action-buttons {
       display: flex;
-      gap: 5px;
+      gap: 8px;
 
       .btn {
-        padding: 5px 8px; // vừa đủ, nhỏ gọn
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 13px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: none;
+        transition: all 0.2s ease-in-out;
       }
 
-
       .btn-edit {
-        border-color: #7c757d;
-        color: #7c757d;
+        border: 1px solid #888;
+        color: #555;
+
+        &:hover {
+          background: #555;
+          color: #fff;
+        }
       }
 
       .btn-delete {
-        border-color: #ffc108; // outline-warning màu chuẩn bootstrap
-        color: #ffc108;
-      }
+        border: 1px solid #d9534f;
+        color: #d9534f;
 
-      .btn-edit:hover {
-        background-color: #7c757d;
-        color: white;
-      }
-
-      .btn-delete:hover {
-        background-color: #ffc108;
-        color: white;
+        &:hover {
+          background: #d9534f;
+          color: #fff;
+        }
       }
     }
   }
 }
 
 .modal-user-container {
+  .modal-content {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .modal-header {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+  }
+
   .modal-user-body {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 15px;
 
     .input-container {
       display: flex;
       flex-direction: column;
-      width: 49%;
+      width: 48%;
 
       &.max-width-input {
         width: 100%;
       }
 
+      label {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 4px;
+      }
+
       input {
-        border-radius: 3px;
-        height: 30px;
-        border: 1px grey solid;
-        padding: 0 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        padding: 6px 10px;
+        font-size: 14px;
+        outline: none;
+
+        &:focus {
+          border-color: #333;
+        }
       }
     }
-
   }
 
+  .modal-footer {
+    border-top: 1px solid #eee;
+  }
 }

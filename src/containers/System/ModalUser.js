@@ -10,8 +10,9 @@ import {
   ModalFooter
 } from "reactstrap";
 import { postNewuser } from '../../services/userService';
+import { emitter } from '../../utils/emitter';
 const ModalUser = (props) => {
-  const { show, setShow, toggle, setIsCreateUser, isCreateUser } = props
+  const { show, toggle } = props
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [firstname, setFirstname] = useState('')
@@ -27,16 +28,14 @@ const ModalUser = (props) => {
       console.log("address:", address);
       let res = await postNewuser({ email, password, firstname, lastname, address })
       console.log('>>>res: ', res)
-      if (res && res.errorCode === 0) {
 
-        setIsCreateUser(true)
+      if (res && res.errorCode === 0) {
         setEmail('')
         setPassword('')
         setFirstname('')
         setLastname('')
         setAddress('')
-      }
-      if (res && res.errorCode === 0) {
+        emitter.emit("EVENT_RELOAD_USERS");
         toggle()
       }
       else if (res) {

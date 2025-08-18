@@ -1,25 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { getAllUsers } from '../../services/userService';
+import { getAllUsers, dele } from '../../services/userService';
 import ModalUser from './ModalUser';
 import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import "./UserManage.scss";
+import ModalDeleteUser from './ModalDeleteUser';
+import { emitter } from '../../utils/emitter';
 
 const UserManage = () => {
   const [users, setUsers] = useState([]);
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
-  const [isCreateUser, setIsCreateUser] = useState(false);
-
+  const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
+  const [showModalEditUser, setShowModalEditUser] = useState(false);
+  const [user, setUser] = useState({})
   const toggleModalCreateUser = () => {
     setShowModalCreateUser(!showModalCreateUser);
   };
+  const toggleModalDeleteUser = () => {
 
+    setShowModalDeleteUser(!showModalDeleteUser);
+  }
+  const toggleModalEditUser = () => {
+    setShowModalEditUser(!showModalEditUser)
+
+  }
+  const handleDeleteUser = (userData) => {
+    toggleModalDeleteUser();
+    setUser(userData)
+  };
   const fetchUsers = async () => {
     try {
       let res = await getAllUsers('ALL');
       if (res && res.errorCode === 0) {
         setUsers(res.users);
-        setIsCreateUser(false);
       } else if (res) {
         console.log('>>>res error: ', res);
       }
@@ -29,12 +42,14 @@ const UserManage = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchUsers(); // lần đầu
+    emitter.on("EVENT_RELOAD_USERS", fetchUsers);
+
+    return () => {
+      emitter.off("EVENT_RELOAD_USERS", fetchUsers); // cleanup khi unmount
+    };
   }, []);
 
-  useEffect(() => {
-    fetchUsers();
-  }, [isCreateUser]);
 
   return (
     <div className="manage-users">
@@ -45,7 +60,8 @@ const UserManage = () => {
           <div className='mx-1 mb-3'>
             <button
               className='btn-add-user btn btn-outline-primary px-2 d-flex justify-content-start'
-              onClick={toggleModalCreateUser}
+              onClick={
+                toggleModalCreateUser}
             >
               Add new user
             </button>
@@ -72,10 +88,16 @@ const UserManage = () => {
                   <td>{user.address}</td>
                   <td>
                     <div className='action-buttons'>
-                      <button className="btn-edit btn btn-outline-secondary btn-sm">
+                      <button
+                        className="btn-edit btn btn-outline-secondary btn-sm"
+                        onClick={() => { toggleModalEditUser() }}
+                      >
                         <FiEdit3 />
                       </button>
-                      <button className="btn-delete btn btn-outline-warning btn-sm">
+                      <button
+                        className="btn-delete btn btn-outline-warning btn-sm"
+                        onClick={() => { handleDeleteUser(user) }}
+                      >
                         <RiDeleteBin6Line />
                       </button>
                     </div>
@@ -89,10 +111,15 @@ const UserManage = () => {
 
       <ModalUser
         show={showModalCreateUser}
-        setShow={setShowModalCreateUser}
-        isCreateUser={isCreateUser}
-        setIsCreateUser={setIsCreateUser}
         toggle={toggleModalCreateUser}
+        user={user}
+      />
+      <ModalDeleteUser
+        show={showModalDeleteUser}
+        toggle={toggleModalDeleteUser}
+        user={user}
+        setUser={setUser}
+
       />
     </div>
   );

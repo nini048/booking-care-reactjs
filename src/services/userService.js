@@ -9,3 +9,6 @@ export const getAllUsers = (id) => {
 export const postNewuser = (user) => {
   return axios.post('api/create-new-user', user)
 }
+export const deleteUser = (id) => {
+  return axios.delete(`/api/delete-user/${id}`)
+}
