@@ -6,13 +6,16 @@ import './HomeHeader.scss'
 import { FaFileMedicalAlt } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
 import { FaRegQuestionCircle } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import { FaRegHospital, FaMicroscope, FaBrain, FaTooth, FaHospital, FaMobile } from "react-icons/fa";
+
 const HomeHeader = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const linkToRedirect = isLoggedIn ? '/system/user-manage' : '/home';
 
   return (
-    <div>
+    <React.Fragment>
       <div className='home-header-container'>
         <div className='home-header-content'>
           <div className='left-content'>
@@ -53,7 +56,54 @@ const HomeHeader = () => {
           </div>
         </div>
       </div>
-    </div>
+      <div className='home-header-banner'>
+        <div className='title1'>NỀN TẢNG Y TẾ</div>
+        <div className='title2'>CHĂM SÓC SỨC KHỎE TOÀN DIỆN</div>
+        <div className='search'>
+          <FaSearch />
+          <input type='text' placeholder='Tìm chuyên khoa khám bệnh' />
+        </div>
+        <div className='options'>
+          <div className='option-child'>
+            <div className='icon-child'>
+              <FaRegHospital size={30} />
+            </div>
+            <div className='text-child'>Khám chuyên khoa</div>
+          </div>
+          <div className='option-child'>
+            <div className='icon-child'>
+              <FaMobile size={30} />
+            </div>
+            <div className='text-child'>Khám từ xa</div>
+          </div>
+          <div className='option-child'>
+            <div className='icon-child'>
+              <FaHospital size={30} />
+            </div>
+            <div className='text-child'>Khám tổng quát</div>
+          </div>
+          <div className='option-child'>
+            <div className='icon-child'>
+              <FaMicroscope size={30} />
+            </div>
+            <div className='text-child'>Xét nghiệm y học</div>
+          </div>
+          <div className='option-child'>
+            <div className='icon-child'>
+              <FaBrain size={30} />
+            </div>
+            <div className='text-child'>Sức khoẻ tinh thần</div>
+          </div>
+          <div className='option-child'>
+            <div className='icon-child'>
+              <FaTooth size={30} />
+            </div>
+            <div className='text-child'>Khám nha khoa</div>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+
   );
 };
 
