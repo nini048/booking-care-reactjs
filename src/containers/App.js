@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState, Fragment } from "react";
+import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter as Router } from "connected-react-router";
 import { history } from "../redux";
@@ -19,84 +19,72 @@ import System from "../routes/System";
 
 import { CustomToastCloseButton } from "../components/CustomToast";
 import ConfirmModal from "../components/ConfirmModal";
+import HomePage from "./HomePage/HomePage";
+const App = ({ persistor, onBeforeLift }) => {
+  const [bootstrapped, setBootstrapped] = useState(false);
 
-class App extends Component {
-  handlePersistorState = () => {
-    const { persistor } = this.props;
-    let { bootstrapped } = persistor.getState();
-    if (bootstrapped) {
-      if (this.props.onBeforeLift) {
-        Promise.resolve(this.props.onBeforeLift())
-          .then(() => this.setState({ bootstrapped: true }))
-          .catch(() => this.setState({ bootstrapped: true }));
-      } else {
-        this.setState({ bootstrapped: true });
+  // lấy dữ liệu từ Redux store
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
+  // thay thế componentDidMount
+  useEffect(() => {
+    const handlePersistorState = async () => {
+      const { bootstrapped } = persistor.getState();
+      if (bootstrapped) {
+        if (onBeforeLift) {
+          try {
+            await Promise.resolve(onBeforeLift());
+            setBootstrapped(true);
+          } catch (e) {
+            setBootstrapped(true);
+          }
+        } else {
+          setBootstrapped(true);
+        }
       }
-    }
-  };
+    };
 
-  componentDidMount() {
-    this.handlePersistorState();
-  }
+    handlePersistorState();
+  }, [persistor, onBeforeLift]);
 
-  render() {
-    return (
-      <Fragment>
-        <Router history={history}>
-          <div className="main-container">
-            <ConfirmModal />
-            {this.props.isLoggedIn && <Header />}
+  return (
+    <Fragment>
+      <Router history={history}>
+        <div className="main-container">
+          <ConfirmModal />
+          {isLoggedIn && <Header />}
 
-            <span className="content-container">
-              <Switch>
-                <Route path={path.HOME} exact component={Home} />
-                <Route
-                  path={path.LOGIN}
-                  component={userIsNotAuthenticated(Login)}
-                />
-                <Route
-                  path={path.SYSTEM}
-                  component={userIsAuthenticated(System)}
-                />
-                <Route
-                  path={path.SYSTEM}
-                  component={userIsAuthenticated(System)}
-                />
-                <Route
-                  path={path.SYSTEM}
-                  component={userIsAuthenticated(System)}
-                />
-              </Switch>
-            </span>
+          <span className="content-container">
+            <Switch>
+              <Route path={path.HOME} exact component={Home} />
+              <Route
+                path={path.LOGIN}
+                component={userIsNotAuthenticated(Login)}
+              />
+              <Route
+                path={path.SYSTEM}
+                component={userIsAuthenticated(System)}
+              />
+              <Route path={path.HOMEPAGE} component={HomePage} />
+            </Switch>
+          </span>
 
-            <ToastContainer
-              className="toast-container"
-              toastClassName="toast-item"
-              bodyClassName="toast-item-body"
-              autoClose={false}
-              hideProgressBar={true}
-              pauseOnHover={false}
-              pauseOnFocusLoss={true}
-              closeOnClick={false}
-              draggable={false}
-              closeButton={<CustomToastCloseButton />}
-            />
-          </div>
-        </Router>
-      </Fragment>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    started: state.app.started,
-    isLoggedIn: state.user.isLoggedIn,
-  };
+          <ToastContainer
+            className="toast-container"
+            toastClassName="toast-item"
+            bodyClassName="toast-item-body"
+            autoClose={false}
+            hideProgressBar={true}
+            pauseOnHover={false}
+            pauseOnFocusLoss={true}
+            closeOnClick={false}
+            draggable={false}
+            closeButton={<CustomToastCloseButton />}
+          />
+        </div>
+      </Router>
+    </Fragment>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

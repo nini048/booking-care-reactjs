@@ -37,7 +37,7 @@ const ModalEditUser = ({ show, toggle, user }) => {
         lastname,
         address,
         phonenumber,
-        role,     // backend nhận "role", không phải roleId
+        role,
         gender
       });
       console.log('>>>res: ', res)
