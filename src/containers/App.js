@@ -20,6 +20,7 @@ import System from "../routes/System";
 import { CustomToastCloseButton } from "../components/CustomToast";
 import ConfirmModal from "../components/ConfirmModal";
 import HomePage from "./HomePage/HomePage";
+import CustomScrollbars from '../components/CustomScrollbars.js'
 const App = ({ persistor, onBeforeLift }) => {
   const [bootstrapped, setBootstrapped] = useState(false);
 
@@ -54,7 +55,8 @@ const App = ({ persistor, onBeforeLift }) => {
           <ConfirmModal />
           {isLoggedIn && <Header />}
 
-          <span className="content-container">
+          <div className="content-container">
+            <CustomScrollbars style = {{height: '100vh', width: '100%'}}>
             <Switch>
               <Route path={path.HOME} exact component={Home} />
               <Route
@@ -67,7 +69,9 @@ const App = ({ persistor, onBeforeLift }) => {
               />
               <Route path={path.HOMEPAGE} component={HomePage} />
             </Switch>
-          </span>
+
+            </CustomScrollbars>
+          </div>
 
           <ToastContainer
             className="toast-container"
