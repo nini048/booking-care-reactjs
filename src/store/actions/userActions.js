@@ -13,4 +13,7 @@ export const userLoginFail = () => ({
 export const processLogout = () => ({
   type: actionTypes.PROCESS_LOGOUT,
 })
-
+export const changeLanguageApp = (language) => ({
+  type: actionTypes.CHANGE_LANGUAGE,
+  language
+})

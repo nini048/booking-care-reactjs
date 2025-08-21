@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './HomeHeader.scss'
 import { FaFileMedicalAlt } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
@@ -10,6 +9,8 @@ import { FaSearch } from "react-icons/fa";
 import { FaRegHospital, FaMicroscope, FaBrain, FaTooth, FaHospital, FaMobile } from "react-icons/fa";
 import logo from '../../assets/images/logo.png'
 import { FormattedMessage, useIntl } from 'react-intl';
+import { LANGUAGES } from '../../utils/constant';
+import { changeLanguageApp } from '../../store/actions/userActions'
 
 
 const HomeHeader = (props) => {
@@ -17,9 +18,18 @@ const HomeHeader = (props) => {
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   console.log(useSelector((state) => state.user))
-  const language = useSelector((state) => state.user.language)
+  const language = useSelector((state) => state.app.language)
   const linkToRedirect = isLoggedIn ? '/system/user-manage' : '/home';
+  const dispatch = useDispatch();
+  const changeLanguage = (language) => {
+    dispatch({
+      type: 'CHANGE_LANGUAGE',
+      language
+    })
+  }
+    console.log(language)
 
+  
   return (
     <React.Fragment>
       <div className='home-header-container'>
@@ -76,8 +86,12 @@ const HomeHeader = (props) => {
               <FaRegQuestionCircle size={18} cursor='pointer' />
               <FormattedMessage id='home-header.support' />
             </div>
-            <div className='language-vi active'>VI</div>
-            <div className='language-en'>EN</div>
+<div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}>
+  <span onClick={() => changeLanguage(LANGUAGES.VI)}>VI</span>
+</div>
+<div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}>
+  <span onClick={() => changeLanguage(LANGUAGES.EN)}>EN</span>
+</div>
           </div>
         </div>
       </div>
