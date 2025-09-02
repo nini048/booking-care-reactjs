@@ -25,9 +25,6 @@
         cursor: pointer;
         transition: transform 0.3s;
 
-        &:hover {
-          transform: scale(1.05);
-        }
       }
     }
 
@@ -35,7 +32,7 @@
     .center-content {
       flex: 1;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: center;
       margin: 0 40px;
 
@@ -52,7 +49,7 @@
           color: #1e88e5; // xanh dương healthcare
 
           &:hover {
-            color: #2cb1bc; // xanh ngọc highlight
+            color: #1565c0; // xanh ngọc highlight
           }
         }
 
@@ -81,7 +78,7 @@
         transition: color 0.3s;
 
         &:hover {
-          color: #2cb1bc;
+          color: #1565c0;
         }
       }
 
@@ -113,9 +110,10 @@
   height: 100%;
   flex-direction: column;
   align-items: center;
-  padding: 80px 20px;
+  padding: 60px 20px 30px 20px;
   background: linear-gradient(135deg, #f7fcfe, #ffffff);
   margin-top: 50px;
+
   .title1 {
     font-size: 42px;
     font-weight: 700;
@@ -146,6 +144,7 @@
     }
 
     input {
+      margin-left: 10px;
       height: 40px;
       width: 420px;
       border: none;
@@ -159,10 +158,14 @@
   .options {
     width: 80%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     margin: 50px 0;
+    gap: 20px;
 
     .option-child {
+      flex: 1;
+      max-height: 180px;
+      height: 160px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -179,13 +182,13 @@
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 
         .icon-child {
-          color: #1e88e5;
+          color: #1565c0;
         }
       }
 
       .icon-child {
         font-size: 38px;
-        color: #2cb1bc;
+        color: #1e88e5;
         transition: color 0.3s;
       }
 
