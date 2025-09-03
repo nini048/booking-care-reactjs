@@ -27,9 +27,9 @@ const HomeHeader = (props) => {
       language
     })
   }
-    console.log(language)
+  console.log(language)
 
-  
+
   return (
     <React.Fragment>
       <div className='home-header-container'>
@@ -86,12 +86,12 @@ const HomeHeader = (props) => {
               <FaRegQuestionCircle size={18} cursor='pointer' />
               <FormattedMessage id='home-header.support' />
             </div>
-<div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}>
-  <span onClick={() => changeLanguage(LANGUAGES.VI)}>VI</span>
-</div>
-<div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}>
-  <span onClick={() => changeLanguage(LANGUAGES.EN)}>EN</span>
-</div>
+            <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}>
+              <span onClick={() => changeLanguage(LANGUAGES.VI)}>VI</span>
+            </div>
+            <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}>
+              <span onClick={() => changeLanguage(LANGUAGES.EN)}>EN</span>
+            </div>
           </div>
         </div>
       </div>
