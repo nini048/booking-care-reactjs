@@ -10,6 +10,8 @@ import Specialty from './Section/Specialty'
 import MedicalFacility from './Section/MedicalFacility';
 import OutstandingDoctor from './Section/OutstandingDoctor';
 import HandBook from './Section/HandBook';
+import About from './Section/About';
+import HomeFooter from './HomeFooter';
 const HomePage = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -37,8 +39,9 @@ const HomePage = () => {
       />
       <HandBook
         settings={settings}
-
       />
+      <About />
+      <HomeFooter />
       <div style={{ heigth: '300px' }}></div>
     </div>
   );

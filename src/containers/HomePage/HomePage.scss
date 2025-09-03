@@ -1,6 +1,6 @@
  .section-share {
-   height: 320px;
-   padding: 60px 40px;
+   height: 350px;
+   padding: 10px 40px 10px;
 
    .slick-slide {
      display: flex !important; // mỗi slide là flex container
@@ -10,14 +10,56 @@
 
    &.section-specialty {
      // border: 1px solid red;
+     background: #f9f9f9;
+     border: 1px solid #eee;
+
    }
 
    &.section-medical-facility {
      // border: 1px solid green;
 
+     // background: #f9f9f9;
+     border: 1px solid #eee;
+   }
+
+   &.section-about {
+     height: 550px !important;
+     background: #f9f9f9;
+     border: 1px solid #eee;
+
+     .section-container {
+
+       .section-about-content {
+         display: flex;
+         // gap: 30px;
+         justify-content: space-between;
+
+         .content-left {
+           width: 50%;
+         }
+
+         .content-right {
+           width: 45%;
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+
+           p {
+             font-size: 16px;
+             line-height: 1.6;
+             color: #444;
+             margin-bottom: 16px;
+             text-align: justify; // căn đều chữ
+           }
+         }
+       }
+     }
    }
 
    &.section-outstanding-doctor {
+     background: #f9f9f9;
+     border: 1px solid #eee;
+
      .doctor-avatar {
        width: 180px;
        display: flex;
@@ -150,4 +192,30 @@
 
    }
 
+ }
+
+ .home-footer {
+   width: 100%;
+   padding: 20px 0;
+   text-align: center;
+   // background: #f9f9f9;
+   border-top: 1px solid #eee;
+
+   p {
+     margin: 0;
+     font-size: 14px;
+     color: #666;
+
+     a {
+       margin-left: 5px;
+       color: #1e88e5;
+       text-decoration: none;
+       font-weight: 500;
+
+       &:hover {
+         text-decoration: underline;
+         color: #1565c0;
+       }
+     }
+   }
  }
