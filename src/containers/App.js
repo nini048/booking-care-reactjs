@@ -25,7 +25,6 @@ const App = ({ persistor, onBeforeLift }) => {
   const [bootstrapped, setBootstrapped] = useState(false);
 
   // lấy dữ liệu từ Redux store
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   // thay thế componentDidMount
   useEffect(() => {
@@ -53,22 +52,21 @@ const App = ({ persistor, onBeforeLift }) => {
       <Router history={history}>
         <div className="main-container">
           <ConfirmModal />
-          {isLoggedIn && <Header />}
 
           <div className="content-container">
-            <CustomScrollbars style = {{height: '100vh', width: '100%'}}>
-            <Switch>
-              <Route path={path.HOME} exact component={Home} />
-              <Route
-                path={path.LOGIN}
-                component={userIsNotAuthenticated(Login)}
-              />
-              <Route
-                path={path.SYSTEM}
-                component={userIsAuthenticated(System)}
-              />
-              <Route path={path.HOMEPAGE} component={HomePage} />
-            </Switch>
+            <CustomScrollbars style={{ height: '100vh', width: '100%' }}>
+              <Switch>
+                <Route path={path.HOME} exact component={Home} />
+                <Route
+                  path={path.LOGIN}
+                  component={userIsNotAuthenticated(Login)}
+                />
+                <Route
+                  path={path.SYSTEM}
+                  component={userIsAuthenticated(System)}
+                />
+                <Route path={path.HOMEPAGE} component={HomePage} />
+              </Switch>
 
             </CustomScrollbars>
           </div>
