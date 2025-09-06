@@ -5,19 +5,21 @@ import Navigator from '../../components/Navigator';
 import { adminMenu } from './menuApp';
 import './Header.scss';
 import { LANGUAGES } from '../../utils/constant.js'
+import { FormattedMessage, useIntl } from 'react-intl';
 const Header = (props) => {
 
   const { processLogout } = props;
   const dispatch = useDispatch();
   const language = useSelector((state) => state.app.language)
+  const userInfo = useSelector((state) => state.user.userInfo)
   const handleChangeLanguages = (language) => {
     dispatch({
       type: 'CHANGE_LANGUAGE',
       language
     })
 
-    console.log(language)
   }
+
   return (
     <div className="header-container">
       {/* thanh navigator */}
@@ -28,6 +30,10 @@ const Header = (props) => {
       <div className='header-right'>
 
         <div className='languages'>
+          <span className='welcome me-3'>
+            <FormattedMessage id='home-header.welcome' />
+            , {userInfo && userInfo.firstName ? userInfo.firstName : ''}!
+          </span>
           <span className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}
             onClick={() => { handleChangeLanguages(LANGUAGES.VI) }}
           >VI</span>
