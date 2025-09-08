@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllCodeService } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils/constant";
+import * as actions from '../../../store/actions'
 const UserRedux = () => {
-  const [genders, setGenders] = useState([])
   const language = useSelector((state) => state.app.language)
+  const genders = useSelector((state) => state.admin.genders)
+  const roles = useSelector((state) => state.admin.roles)
+  const positions = useSelector((state) => state.admin.positions)
 
+  const dispatch = useDispatch()
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let res = await getAllCodeService('GENDER')
-        if (res && res.errorCode === 0) {
-          setGenders(res.data)
-
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    }
-    fetchData()
+    dispatch(actions.fetchAllCodeStart('GENDER'))
+    dispatch(actions.fetchAllCodeStart('POSITION'))
+    dispatch(actions.fetchAllCodeStart('ROLE'))
   }, [])
 
-  console.log('>>res gender: ', genders)
+  console.log('genders: ', genders)
   return (
     <div className="user-redux-container">
       <div className="user-redux-body">
@@ -38,13 +33,22 @@ const UserRedux = () => {
                   <FormattedMessage id='manage-user.email' />
 
                 </label>
-                <input type="email" className="form-control" id="email" placeholder="Enter email" />
+                <FormattedMessage id="manage-user.email-placeholder">
+                  {(msg) => (
+                    <input type="email" className="form-control" id="email" placeholder={msg} />
+                  )}
+                </FormattedMessage>
               </div>
               <div className="col-md-6 mb-3">
                 <label htmlFor="password" className="form-label">
                   <FormattedMessage id='manage-user.password' />
                 </label>
-                <input type="password" className="form-control" id="password" placeholder="Enter password" />
+                <FormattedMessage id="manage-user.password-placeholder">
+                  {(msg) => (
+                    <input type="password" className="form-control" id="password" placeholder={msg} />
+                  )}
+                </FormattedMessage>
+
               </div>
             </div>
 
@@ -54,13 +58,22 @@ const UserRedux = () => {
                 <label htmlFor="firstName" className="form-label">
                   <FormattedMessage id='manage-user.first-name' />
                 </label>
-                <input type="text" className="form-control" id="firstName" placeholder="First name" />
+                <FormattedMessage id="manage-user.first-name-placeholder">
+                  {(msg) => (
+                    <input type="text" className="form-control" id="firstName" placeholder={msg} />
+                  )}
+                </FormattedMessage>
               </div>
               <div className="col-md-6 mb-3">
                 <label htmlFor="lastName" className="form-label">
                   <FormattedMessage id='manage-user.last-name' />
                 </label>
-                <input type="text" className="form-control" id="lastName" placeholder="Last name" />
+                <FormattedMessage id="manage-user.last-name-placeholder">
+                  {(msg) => (
+                    <input type="text" className="form-control" id="lastName" placeholder={msg} />
+                  )}
+                </FormattedMessage>
+
               </div>
             </div>
 
@@ -70,13 +83,23 @@ const UserRedux = () => {
                 <label htmlFor="phone" className="form-label">
                   <FormattedMessage id='manage-user.phone-number' />
                 </label>
-                <input type="text" className="form-control" id="phone" placeholder="Enter phone number" />
+                <FormattedMessage id="manage-user.phone-number-placeholder">
+                  {(msg) => (
+                    <input type="text" className="form-control" id="phoneNumber" placeholder={msg} />
+                  )}
+                </FormattedMessage>
+
               </div>
               <div className="col-md-6 mb-3">
                 <label htmlFor="address" className="form-label">
                   <FormattedMessage id='manage-user.address' />
                 </label>
-                <input type="text" className="form-control" id="address" placeholder="Enter address" />
+                <FormattedMessage id="manage-user.address-placeholder">
+                  {(msg) => (
+                    <input type="text" className="form-control" id="address" placeholder={msg} />
+                  )}
+                </FormattedMessage>
+
               </div>
             </div>
 
@@ -100,13 +123,39 @@ const UserRedux = () => {
                 </select>
               </div>
               <div className="col-md-3 mb-3">
-                <label htmlFor="position" className="form-label">
+                <label htmlFor="role" className="form-label">
                   <FormattedMessage id='manage-user.role' />
                 </label>
+                <select id="role" className="form-select">
+                  {roles && roles.length > 0 &&
+                    roles.map((role, index) => {
+                      return (
+                        <option key={index}>
+                          {language === LANGUAGES.VI ? role.valueVi : role.valueEn}
+                        </option>
+
+                      )
+                    })
+                  }
+
+                </select>
+              </div>
+              <div className="col-md-3 mb-3">
+                <label htmlFor="position" className="form-label">
+                  <FormattedMessage id='manage-user.position' />
+                </label>
                 <select id="position" className="form-select">
-                  <option defaultValue>Choose...</option>
-                  <option>Staff</option>
-                  <option>Manager</option>
+                  {positions && positions.length > 0 &&
+                    positions.map((position, index) => {
+                      return (
+                        <option key={index}>
+                          {language === LANGUAGES.VI ? position.valueVi : position.valueEn}
+                        </option>
+
+                      )
+                    })
+                  }
+
                 </select>
               </div>
               {/* <div className="col-md-3 mb-3"> */}

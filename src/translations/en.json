@@ -76,15 +76,21 @@
   "manage-user": {
     "add": "Add new user",
     "email": "Email",
+    "email-placeholder": "Enter email",
     "password": "Password",
+    "password-placeholder": "Enter password",
     "first-name": "First name",
+    "first-name-placeholder": "Enter first name",
     "last-name": "Last name",
+    "last-name-placeholder": "Enter last name",
     "phone-number": "Phone number",
+    "phone-number-placeholder": "Enter phone number",
     "address": "Address",
+    "address-placeholder": "Enter address",
     "gender": "Gender",
     "position": "Position",
     "role": "Role",
-    "image": "Avatar",
-    "save": "Save user"
+    "image": "Profile image",
+    "save": "Save"
   }
 }
