@@ -2,6 +2,7 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
+  isLoading: false,
   genders: [],
   roles: [],
   positions: []
@@ -10,14 +11,17 @@ const initialState = {
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.FETCH_ALLCODE_START:
+
       return {
         ...state,
+        isLoading: true
       }
     case actionTypes.FETCH_ALLCODE_SUCCESS:
       if (action.codeType === 'GENDER') {
         return {
           ...state,
           genders: action.data,
+          isLoading: false
         }
 
       }
@@ -25,6 +29,7 @@ const adminReducer = (state = initialState, action) => {
         return {
           ...state,
           roles: action.data,
+          isLoading: false
         }
 
       }
@@ -32,6 +37,7 @@ const adminReducer = (state = initialState, action) => {
         return {
           ...state,
           positions: action.data,
+          isLoading: false
         }
 
       }
@@ -41,13 +47,19 @@ const adminReducer = (state = initialState, action) => {
     case actionTypes.FETCH_ALLCODE_FAILED:
 
       if (action.codeType === 'gender') {
-        return { ...state, genders: [] };
+        return {
+          ...state, genders: [], isLoading: false
+        };
       }
       if (action.codeType === 'role') {
-        return { ...state, roles: [] };
+        return {
+          ...state, roles: [], isLoading: false
+        };
       }
       if (action.codeType === 'position') {
-        return { ...state, positions: [] };
+        return {
+          ...state, positions: [], isLoading: false
+        };
       }
       return state;
     default:

@@ -1,0 +1,79 @@
+.user-redux-container {
+  background: #ffffff;
+  color: #333333;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 60px;
+
+  .title {
+    color: #333333;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  form {
+    .form-label {
+      font-weight: 500;
+      color: #333333;
+      margin-bottom: 0.25rem;
+    }
+
+    .form-control,
+    .form-select {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      margin-bottom: 1.5rem;
+
+      &:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+      }
+    }
+
+
+    .right-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; // Đẩy button xuống cuối
+      height: 100%; // Đảm bảo flex hoạt động với chiều cao đầy đủ của container
+
+      .avatar-preview {
+        border: 1px dashed #ccc;
+        border-radius: 12px;
+        padding: 1rem;
+        background: #f9f9f9;
+        height: 250px; // Giới hạn chiều cao
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; // Ẩn phần thừa nếu ảnh quá lớn
+
+        img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain; // Giữ tỉ lệ gốc, không méo
+          border-radius: 12px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+      }
+
+      .btn-submit {
+        margin-top: 1rem;
+        align-self: flex-end; // Nằm bên phải nếu muốn
+      }
+    }
+  }
+
+  .loading-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

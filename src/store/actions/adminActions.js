@@ -3,8 +3,10 @@ import actionTypes from './actionTypes';
 
 import { getAllCodeService } from '../../services/userService';
 export const fetchAllCodeStart = (inputType) => {
+
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: actionTypes.FETCH_ALLCODE_START })
       let res = await getAllCodeService(inputType)
       if (res && res.errorCode === 0) {
         dispatch(fetchAllCodeSuccess(inputType, res.data));
