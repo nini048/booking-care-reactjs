@@ -14,6 +14,7 @@ const UserManage = () => {
   const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
   const [showModalEditUser, setShowModalEditUser] = useState(false);
   const [user, setUser] = useState({})
+
   const getRoleName = (roleId) => {
     switch (roleId) {
       case '1':

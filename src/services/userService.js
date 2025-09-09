@@ -19,3 +19,6 @@ export const getAllCodeService = (inputType) => {
 
   return axios.get(`/allcode?type=${inputType}`)
 }
+export const createNewUserService = (data) => {
+  return axios.post('/api/create-new-user', data)
+}

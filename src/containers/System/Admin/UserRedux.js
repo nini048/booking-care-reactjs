@@ -5,31 +5,55 @@ import { useDispatch, useSelector } from "react-redux";
 import { LANGUAGES } from "../../../utils/constant";
 import * as actions from "../../../store/actions";
 import { ThreeDots } from "react-loader-spinner";
-
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 const UserRedux = () => {
+  const dispatch = useDispatch();
   const language = useSelector((state) => state.app.language);
   const genders = useSelector((state) => state.admin.genders);
   const roles = useSelector((state) => state.admin.roles);
   const positions = useSelector((state) => state.admin.positions);
   const isLoading = useSelector((state) => state.admin.isLoading);
-
-  const [avatar, setAvatar] = useState(null);
   const [preview, setPreview] = useState(null);
-
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(actions.fetchAllCodeStart("GENDER"));
     dispatch(actions.fetchAllCodeStart("POSITION"));
     dispatch(actions.fetchAllCodeStart("ROLE"));
   }, [dispatch]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setAvatar(file);
-      setPreview(URL.createObjectURL(file));
-    }
+  const validationSchema = Yup.object({
+    email: Yup.string().email("Email không hợp lệ").required("Email bắt buộc"),
+    password: Yup.string().min(6, "Mật khẩu ít nhất 6 ký tự").required("Mật khẩu bắt buộc"),
+    firstName: Yup.string().required("Họ bắt buộc"),
+    lastName: Yup.string().required("Tên bắt buộc"),
+    phoneNumber: Yup.string()
+      .matches(/^[0-9]{10,15}$/, "Số điện thoại không hợp lệ")
+      .required("Số điện thoại bắt buộc"),
+    address: Yup.string().required("Địa chỉ bắt buộc"),
+    gender: Yup.string().required("Giới tính bắt buộc"),
+    role: Yup.string().required("Role bắt buộc"),
+    position: Yup.string().required("Chức vụ bắt buộc"),
+    image: Yup.mixed().required("Avatar bắt buộc"),
+  });
+
+  const initialValues = {
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    address: "",
+    gender: genders?.[0]?.type || "",   // lấy option đầu tiên
+    role: roles?.[0]?.type || "",
+    position: positions?.[0]?.type || "",
+    image: null,
+  };
+
+  const handleSubmit = async (values, { resetForm }) => {
+    dispatch(actions.createNewUser(values));
+
+    resetForm();
+    setPreview(null);
   };
 
   return (
@@ -38,195 +62,162 @@ const UserRedux = () => {
         <FormattedMessage id="manage-user.add" />
       </div>
 
-      {isLoading && (
+      {isLoading ? (
         <div className="loading-wrapper text-center my-5">
-          <ThreeDots
-            height="60"
-            width="60"
-            radius="9"
-            color="#0d6efd"
-            ariaLabel="three-dots-loading"
-            visible={true}
-          />
+          <ThreeDots height="60" width="60" radius="9" color="#0d6efd" visible={true} />
         </div>
-      )}
-
-      {!isLoading && (
-        <form className="row g-4">
-          <div className="col-lg-8">
-            <div className="row">
-              <div className="col-md-6">
-                <label htmlFor="email" className="form-label">
-                  <FormattedMessage id="manage-user.email" />
-                </label>
-                <FormattedMessage id="manage-user.email-placeholder">
-                  {(msg) => (
-                    <input
+      ) : (
+        <Formik
+          enableReinitialize
+          initialValues={
+            initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ setFieldValue, values }) => (
+            <Form className="row g-4">
+              <div className="col-lg-8">
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.email" />
+                    </label>
+                    <Field
                       type="email"
+                      name="email"
                       className="form-control"
-                      id="email"
-                      placeholder={msg}
+                      placeholder="Nhập email"
                     />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="password" className="form-label">
-                  <FormattedMessage id="manage-user.password" />
-                </label>
-                <FormattedMessage id="manage-user.password-placeholder">
-                  {(msg) => (
-                    <input
+                    <ErrorMessage name="email" component="div" className="text-danger" />
+                  </div>
+
+                  <div className="col-md-6">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.password" />
+                    </label>
+                    <Field
                       type="password"
+                      name="password"
                       className="form-control"
-                      id="password"
-                      placeholder={msg}
+                      placeholder="Nhập mật khẩu"
                     />
-                  )}
-                </FormattedMessage>
-              </div>
-            </div>
+                    <ErrorMessage name="password" component="div" className="text-danger" />
+                  </div>
+                </div>
 
-            <div className="row">
-              <div className="col-md-6">
-                <label htmlFor="firstName" className="form-label">
-                  <FormattedMessage id="manage-user.first-name" />
-                </label>
-                <FormattedMessage id="manage-user.first-name-placeholder">
-                  {(msg) => (
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="firstName"
-                      placeholder={msg}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="lastName" className="form-label">
-                  <FormattedMessage id="manage-user.last-name" />
-                </label>
-                <FormattedMessage id="manage-user.last-name-placeholder">
-                  {(msg) => (
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastName"
-                      placeholder={msg}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-            </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.first-name" />
+                    </label>
+                    <Field type="text" name="firstName" className="form-control" placeholder="Họ" />
+                    <ErrorMessage name="firstName" component="div" className="text-danger" />
+                  </div>
 
-            <div className="row">
-              <div className="col-md-6">
-                <label htmlFor="phone" className="form-label">
-                  <FormattedMessage id="manage-user.phone-number" />
-                </label>
-                <FormattedMessage id="manage-user.phone-number-placeholder">
-                  {(msg) => (
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="phoneNumber"
-                      placeholder={msg}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="col-md-6">
-                <label htmlFor="address" className="form-label">
-                  <FormattedMessage id="manage-user.address" />
-                </label>
-                <FormattedMessage id="manage-user.address-placeholder">
-                  {(msg) => (
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="address"
-                      placeholder={msg}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-            </div>
+                  <div className="col-md-6">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.last-name" />
+                    </label>
+                    <Field type="text" name="lastName" className="form-control" placeholder="Tên" />
+                    <ErrorMessage name="lastName" component="div" className="text-danger" />
+                  </div>
+                </div>
 
-            <div className="row">
-              <div className="col-md-4">
-                <label htmlFor="gender" className="form-label">
-                  <FormattedMessage id="manage-user.gender" />
-                </label>
-                <select id="gender" className="form-select">
-                  {genders &&
-                    genders.map((gender, index) => (
-                      <option key={index}>
-                        {language === LANGUAGES.VI
-                          ? gender.valueVi
-                          : gender.valueEn}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <div className="col-md-4">
-                <label htmlFor="role" className="form-label">
-                  <FormattedMessage id="manage-user.role" />
-                </label>
-                <select id="role" className="form-select">
-                  {roles &&
-                    roles.map((role, index) => (
-                      <option key={index}>
-                        {language === LANGUAGES.VI
-                          ? role.valueVi
-                          : role.valueEn}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <div className="col-md-4">
-                <label htmlFor="position" className="form-label">
-                  <FormattedMessage id="manage-user.position" />
-                </label>
-                <select id="position" className="form-select">
-                  {positions &&
-                    positions.map((position, index) => (
-                      <option key={index}>
-                        {language === LANGUAGES.VI
-                          ? position.valueVi
-                          : position.valueEn}
-                      </option>
-                    ))}
-                </select>
-              </div>
-            </div>
-          </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.phone-number" />
+                    </label>
+                    <Field type="text" name="phoneNumber" className="form-control" placeholder="Số điện thoại" />
+                    <ErrorMessage name="phoneNumber" component="div" className="text-danger" />
+                  </div>
 
-          <div className="right-content col-lg-4">
-            <label htmlFor="image" className="form-label">
-              <FormattedMessage id="manage-user.image" />
-            </label>
-            <input
-              type="file"
-              className="form-control"
-              id="image"
-              onChange={handleImageChange}
-              accept="image/*"
-            />
+                  <div className="col-md-6">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.address" />
+                    </label>
+                    <Field type="text" name="address" className="form-control" placeholder="Địa chỉ" />
+                    <ErrorMessage name="address" component="div" className="text-danger" />
+                  </div>
+                </div>
 
-            <div className="avatar-preview mt-3 text-center">
-              {preview ? (
-                <img src={preview} alt="Avatar Preview" className="img-fluid rounded" />
-              ) : (
-                <div className="placeholder">No preview image</div>
-              )}
-            </div>
-            <button type="button" className="btn btn-secondary btn-submit">
-              <FormattedMessage id='manage-user.save' />
-            </button>
+                <div className="row">
+                  <div className="col-md-4">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.gender" />
+                    </label>
+                    <Field as="select" name="gender" className="form-select">
+                      {genders.map((g, i) => (
+                        <option key={i} value={g.key}>
+                          {language === LANGUAGES.VI ? g.valueVi : g.valueEn}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage name="gender" component="div" className="text-danger" />
+                  </div>
 
-          </div>
-        </form>
+                  <div className="col-md-4">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.role" />
+                    </label>
+                    <Field as="select" name="role" className="form-select">
+                      {roles.map((r, i) => (
+                        <option key={i} value={r.key}>
+                          {language === LANGUAGES.VI ? r.valueVi : r.valueEn}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage name="role" component="div" className="text-danger" />
+                  </div>
+
+                  <div className="col-md-4">
+                    <label className="form-label">
+                      <FormattedMessage id="manage-user.position" />
+                    </label>
+                    <Field as="select" name="position" className="form-select">
+                      {positions.map((p, i) => (
+                        <option key={i} value={p.key}>
+                          {language === LANGUAGES.VI ? p.valueVi : p.valueEn}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage name="position" component="div" className="text-danger" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="right-content col-lg-4">
+                <label className="form-label">
+                  <FormattedMessage id="manage-user.image" />
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.currentTarget.files[0];
+                    setFieldValue("image", file);
+                    if (file) setPreview(URL.createObjectURL(file));
+                  }}
+                />
+
+                <div className="avatar-preview mt-3 text-center">
+                  <img
+                    src={preview} // ảnh mặc định nếu chưa chọn
+                    alt="Avatar Preview"
+                    className="img-fluid rounded"
+                  />
+                </div>
+
+                <ErrorMessage name="image" component="div" className="text-danger" />
+
+                <button type="submit" className="btn btn-secondary btn-submit mt-3">
+                  <FormattedMessage id="manage-user.save" />
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       )}
     </div>
   );

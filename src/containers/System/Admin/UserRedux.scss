@@ -19,7 +19,14 @@
     .form-label {
       font-weight: 500;
       color: #333333;
-      margin-bottom: 0.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .text-danger {
+      min-height: 1.2rem; // giữ khoảng trống cho lỗi
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
     }
 
     .form-control,
@@ -29,7 +36,8 @@
       padding: 0.5rem 0.75rem;
       font-size: 0.95rem;
       transition: all 0.2s ease;
-      margin-bottom: 1.5rem;
+      // margin-top: 1.5rem;
+      ;
 
       &:focus {
         border-color: #0d6efd;
