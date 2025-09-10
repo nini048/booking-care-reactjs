@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./UserRedux.scss";
 import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,17 +43,29 @@ const UserRedux = () => {
     lastName: "",
     phoneNumber: "",
     address: "",
-    gender: genders?.[0]?.type || "",   // lấy option đầu tiên
-    role: roles?.[0]?.type || "",
-    position: positions?.[0]?.type || "",
+    gender: genders?.[0]?.key || "",   // lấy option đầu tiên
+    role: roles?.[0]?.key || "",
+    position: positions?.[0]?.key || "",
     image: null,
   };
 
+  const fileInputRef = useRef(null);
   const handleSubmit = async (values, { resetForm }) => {
-    dispatch(actions.createNewUser(values));
+    const formData = new FormData();
+    Object.keys(values).forEach((key) => {
+      formData.append(key, values[key]);
+    });
+    let res = await dispatch(actions.createNewUser(formData));
 
-    resetForm();
-    setPreview(null);
+    console.log("res: ", res);
+
+    if (res && res.errorCode === 0) {
+      resetForm();
+      setPreview(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = null;
+      }
+    }
   };
 
   return (
@@ -194,6 +206,7 @@ const UserRedux = () => {
                   type="file"
                   className="form-control"
                   accept="image/*"
+                  ref={fileInputRef}
                   onChange={(e) => {
                     const file = e.currentTarget.files[0];
                     setFieldValue("image", file);

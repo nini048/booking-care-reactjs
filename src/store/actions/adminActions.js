@@ -33,12 +33,14 @@ export const createNewUser = (data) => {
       dispatch({ type: actionTypes.CREATE_USER_START });
 
       let res = await createNewUserService(data);
-      console.log("res:", res);
 
       if (res && res.errorCode === 0) {
         dispatch(createNewUserSuccess(res));
+        return res
       } else {
         dispatch(createNewUserFailed(res));
+        return res
+
       }
     } catch (e) {
       dispatch(createNewUserFailed(e));
