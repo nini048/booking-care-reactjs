@@ -24,3 +24,7 @@ export const createNewUserService = (data) => {
     headers: { "Content-Type": "multipart/form-data" }
   })
 }
+export const getTopDoctorHomeService = (limit) => {
+  return axios.get(`/api/top-doctor-home?limit=${limit}`)
+}
+

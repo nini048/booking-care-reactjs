@@ -1,69 +1,60 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import outstandingDoctorImg from '../../../assets/outstandingDoctor/orm-doctor.JPG'
 import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Slider from "react-slick";
+import * as actions from '../../../store/actions'
+import { fetchTopDoctor } from '../../../store/actions';
+import { FormattedMessage } from 'react-intl';
 
 const OutstandingDoctor = (props) => {
   let { settings } = props
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn)
+  const topDoctors = useSelector(state => state.admin.topDoctors)
+  const language = useSelector(state => state.app.language)
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchTopDoc = async () => {
+      let res = await dispatch(fetchTopDoctor(10))
+      console.log(res)
+    }
+    fetchTopDoc()
+  }, [dispatch])
+  console.log('topDoctors: ', topDoctors)
+  const topDoctorsTriple = topDoctors ? [...topDoctors, ...topDoctors, ...topDoctors, ...topDoctors] : [];
 
   return (
     <div className=' section-share section-outstanding-doctor'>
       <div className='section-container'>
         <div className='section-header'>
-          <span className='title-section'>Bác sĩ nồi bật</span>
-          <button className=' btn-section btn btn-light'>Tìm kiếm</button>
+          <span className='title-section'>
+            <FormattedMessage id="section.outstanding-doctor" />
+
+          </span>
+          <button className=' btn-section btn btn-light'>
+            <FormattedMessage id='common.search' />
+          </button>
         </div>
         <div className='section-body'>
           <Slider {...settings}>
-            {/* <div className='specialty-body'> */}
-            {/*   <img src={specialtyImg} /> */}
-            {/*   <div>Cơ xương khớp 1</div> */}
-            {/* </div> */}
-            <div className=' doctor-avatar'>
+            {topDoctorsTriple && topDoctorsTriple.length > 0
+              && topDoctorsTriple.map((doc, index) => {
+                const avatarUrl = doc.image
+                  ? `http://localhost:8080/uploads/${doc.image}`
+                  : outstandingDoctorImg;
+                return (
 
-              <img src={outstandingDoctorImg} />
-              <div className='description-doctor text-center'>
-                <div className='name'>Dr.Orm Kornaphat 1</div>
-                <div className='position'>Cơ xương khớp</div>
-              </div>
-            </div>
-            <div className=' doctor-avatar'>
-
-              <img src={outstandingDoctorImg} />
-
-              <div className='description-doctor text-center'>
-                <div className='name'>Dr.Orm Kornaphat 2</div>
-                <div className='position'>Cơ xương khớp</div>
-              </div>
-            </div>
-            <div className=' doctor-avatar'>
-              <img src={outstandingDoctorImg} />
-              <div className='description-doctor text-center'>
-                <div className='name'>Dr.Orm Kornaphat 3</div>
-                <div className='position'>Cơ xương khớp</div>
-              </div>
-
-            </div>
-            <div className=' doctor-avatar'>
-
-              <img src={outstandingDoctorImg} />
-
-              <div className='description-doctor text-center'>
-                <div className='name'>Dr.Orm Kornaphat 4</div>
-                <div className='position'>Cơ xương khớp</div>
-              </div>
-            </div>
-            <div className=' doctor-avatar'>
-
-              <img src={outstandingDoctorImg} />
-
-              <div className='description-doctor text-center'>
-                <div className='name'>Dr.Orm Kornaphat 5</div>
-                <div className='position'>Cơ xương khớp</div>
-              </div>
-            </div>
+                  <div key={index} className=' doctor-avatar'>
+                    <img src={avatarUrl} />
+                    <div className='description-doctor text-center'>
+                      <div className='name'>{language === 'vi' ? doc.positionData?.valueVi : doc.positionData?.valueEn} {doc.firstName} {doc.lastName}</div>
+                      <div className='position'>{language === 'vi' ? doc.positionData?.valueVi : doc.positionData?.valueEn}</div>
+                    </div>
+                  </div>
+                )
+              })}
 
           </Slider>
         </div>

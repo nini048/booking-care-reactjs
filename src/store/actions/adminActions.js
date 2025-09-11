@@ -1,13 +1,19 @@
 
 import actionTypes from './actionTypes';
 
-import { createNewUserService, deleteUser, getAllCodeService, getAllUsers, putEditUser } from '../../services/userService';
+import {
+  createNewUserService, deleteUser,
+  getAllCodeService, getAllUsers, putEditUser,
+  getTopDoctorHomeService
+} from '../../services/userService';
 export const fetchAllCodeStart = (inputType) => {
 
   return async (dispatch, getState) => {
     try {
       dispatch({ type: actionTypes.FETCH_ALLCODE_START })
       let res = await getAllCodeService(inputType)
+      // let res1 = await getTopDoctorHomeService(2)
+      // console.log('>>check res1: ', res1)
       if (res && res.errorCode === 0) {
         dispatch(fetchAllCodeSuccess(inputType, res.data));
       } else {
@@ -159,4 +165,26 @@ export const updateUserFailed = (error) => ({
   type: actionTypes.UPDATE_USER_FAILED,
   data: error,
 });
+
+export const fetchTopDoctor = (limit) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionTypes.FETCH_TOP_DOCTOR_START });
+      let res = await getTopDoctorHomeService(limit);
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_TOP_DOCTOR_SUCCESS,
+          data: res
+        });
+
+      } else {
+        dispatch({ type: actionTypes.FETCH_TOP_DOCTOR_FAILED });
+      }
+      return res;
+    } catch (e) {
+      dispatch({ type: actionTypes.FETCH_TOP_DOCTOR_FAILED });
+      return { errorCode: 1, message: 'Fetch users error' };
+    }
+  }
+}
 

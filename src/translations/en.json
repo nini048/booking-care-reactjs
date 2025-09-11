@@ -27,6 +27,7 @@
     "dental": "Dental Checkup"
   },
   "common": {
+    "search": "Search",
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
@@ -72,6 +73,9 @@
       "handbook": "Handbook",
       "manage-handbook": "Handbook Management"
     }
+  },
+  "section": {
+    "outstanding-doctor": "Outstanding Doctors"
   },
   "manage-user": {
     "add": "Add new user",

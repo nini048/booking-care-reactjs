@@ -26,7 +26,11 @@
     "mental": "Sức khoẻ tinh thần",
     "dental": "Khám nha khoa"
   },
+  "section": {
+    "outstanding-doctor": "Bác sĩ nổi bật"
+  },
   "common": {
+    "search": "Tìm kiếm",
     "add": "Thêm",
     "edit": "Sửa",
     "delete": "Xóa",
