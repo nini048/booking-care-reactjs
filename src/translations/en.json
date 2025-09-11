@@ -26,6 +26,14 @@
     "mental": "Mental Health",
     "dental": "Dental Checkup"
   },
+  "manage-doctor": {
+    "title": "Add Doctor Information",
+    "select-doctor": "Select Doctor:",
+    "description": "Introduction:",
+    "markdown": "Markdown Content:",
+    "save": "Save",
+    "save-success": "Doctor information saved successfully!"
+  },
   "common": {
     "search": "Search",
     "add": "Add",

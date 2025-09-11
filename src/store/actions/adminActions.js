@@ -4,7 +4,8 @@ import actionTypes from './actionTypes';
 import {
   createNewUserService, deleteUser,
   getAllCodeService, getAllUsers, putEditUser,
-  getTopDoctorHomeService
+  getTopDoctorHomeService,
+  getAllDoctors
 } from '../../services/userService';
 export const fetchAllCodeStart = (inputType) => {
 
@@ -188,3 +189,24 @@ export const fetchTopDoctor = (limit) => {
   }
 }
 
+export const fetchAllDoctors = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionTypes.FETCH_ALL_DOCTORS_START });
+      let res = await getAllDoctors();
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+          data: res
+        });
+
+      } else {
+        dispatch({ type: actionTypes.FETCH_ALL_DOCTORS_FAILED });
+      }
+      return res;
+    } catch (e) {
+      dispatch({ type: actionTypes.FETCH_ALL_DOCTORS_FAILED });
+      return { errorCode: 1, message: 'Fetch users error' };
+    }
+  }
+}

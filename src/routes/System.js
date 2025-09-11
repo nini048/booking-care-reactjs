@@ -7,6 +7,7 @@ import RegisterPackageGroupOrAcc from '../containers/System/RegisterPackageGroup
 import Header from '../containers/Header/Header';
 
 import { useSelector } from "react-redux";
+import ManageDoctor from '../containers/System/Admin/ManageDoctor';
 const System = (props) => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -19,6 +20,7 @@ const System = (props) => {
           <Switch>
             <Route path="/system/user-manage" component={UserManage} />
             <Route path="/system/user-redux" component={UserRedux} />
+            <Route path="/system/manage-doctor" component={ManageDoctor} />
             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
           </Switch>
         </div>

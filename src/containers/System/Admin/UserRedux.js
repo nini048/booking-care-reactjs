@@ -285,7 +285,6 @@ const UserRedux = () => {
           <TableManageUser
             users={users}
           />
-          <Markdown />
         </>
 
       )}

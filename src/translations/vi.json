@@ -29,6 +29,14 @@
   "section": {
     "outstanding-doctor": "Bác sĩ nổi bật"
   },
+  "manage-doctor": {
+    "title": "Thêm thông tin bác sĩ",
+    "select-doctor": "Chọn bác sĩ",
+    "description": "Thông tin giới thiệu:",
+    "markdown": "Nội dung Markdown:",
+    "save": "Lưu",
+    "save-success": "Lưu thông tin bác sĩ thành công!"
+  },
   "common": {
     "search": "Tìm kiếm",
     "add": "Thêm",

@@ -5,16 +5,16 @@ import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Slider from "react-slick";
 import * as actions from '../../../store/actions'
-import { fetchTopDoctor } from '../../../store/actions';
+import { fetchAllDoctors, fetchTopDoctor } from '../../../store/actions';
 import { FormattedMessage } from 'react-intl';
 
 const OutstandingDoctor = (props) => {
+  const dispatch = useDispatch();
   let { settings } = props
-  const isLoggedIn = useSelector(state => state.user.isLoggedIn)
   const topDoctors = useSelector(state => state.admin.topDoctors)
   const language = useSelector(state => state.app.language)
 
-  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchTopDoc = async () => {
       let res = await dispatch(fetchTopDoctor(10))
