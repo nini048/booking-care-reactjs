@@ -8,6 +8,9 @@ import { ThreeDots } from "react-loader-spinner";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import TableManageUser from "./TableManageUser";
+import Swal from "sweetalert2";
+import { translateMessage } from "../../../utils/translateMessage";
+
 
 const UserRedux = () => {
   const dispatch = useDispatch();
@@ -17,6 +20,7 @@ const UserRedux = () => {
   const positions = useSelector((state) => state.admin.positions);
   const isLoading = useSelector((state) => state.admin.isLoading);
   const [preview, setPreview] = useState(null);
+  const users = useSelector((state) => state.admin.users || []);
   const intl = useIntl();
 
 
@@ -24,6 +28,7 @@ const UserRedux = () => {
     dispatch(actions.fetchAllCodeStart("GENDER"));
     dispatch(actions.fetchAllCodeStart("POSITION"));
     dispatch(actions.fetchAllCodeStart("ROLE"));
+    dispatch(actions.fetchAllUsersStart())
   }, [dispatch]);
 
   const validationSchema = Yup.object({
@@ -65,14 +70,31 @@ const UserRedux = () => {
     console.log("res: ", res);
 
     if (res && res.errorCode === 0) {
+      Swal.fire({
+        title: translateMessage("Success! / Thành công!", language),
+        text: translateMessage(res.message, language),
+        icon: "success",
+        confirmButtonText: "OK"
+      });
       resetForm();
       setPreview(null);
       if (fileInputRef.current) {
         fileInputRef.current.value = null;
       }
     }
+    else {
+      Swal.fire({
+        title: translateMessage("Error! / Thất bại!", language),
+        text: translateMessage(res.message, language),
+        icon: "error",
+
+        confirmButtonText: "OK"
+      });
+
+    }
   };
 
+  console.log('users: ', users)
   return (
     <div className="user-redux-container container">
       <div className="title my-4 text-center fw-bold fs-4">
@@ -254,7 +276,9 @@ const UserRedux = () => {
             )}
           </Formik>
 
-          <TableManageUser />
+          <TableManageUser
+            users={users}
+          />
         </>
 
       )}

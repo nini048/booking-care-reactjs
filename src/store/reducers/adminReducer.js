@@ -71,7 +71,7 @@ const adminReducer = (state = initialState, action) => {
     case actionTypes.FETCH_ALL_USERS_SUCCESS:
       return {
         ...state,
-        users: action.users,
+        users: [...action.users].reverse(),
         // isLoading: false
       }
     case actionTypes.FETCH_ALL_USERS_FAILED:
@@ -80,7 +80,20 @@ const adminReducer = (state = initialState, action) => {
 
 
       }
-
+    case actionTypes.CREATE_USER_SUCCESS:
+      return {
+        ...state,
+        users: [action.data.users, ...state.users]
+      }
+    case actionTypes.DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        users: state.users.filter((u) => u.id !== action.userId),
+      };
+    case actionTypes.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+      }
     default:
       return state;
   }

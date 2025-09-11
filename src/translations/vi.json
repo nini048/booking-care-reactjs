@@ -92,6 +92,25 @@
     "position": "Chức danh",
     "role": "Vai trò",
     "image": "Ảnh đại diện",
-    "save": "Lưu"
+    "save": "Lưu",
+    "actions": "Hành động",
+    "view": "Xem",
+    "edit": "Sửa",
+    "delete": "Xóa"
+  },
+  "message": {
+    "success": "Thành công!",
+    "error": "Thất bại",
+    "warning": "Cảnh báo",
+    "ok": "Đồng ý",
+    "cancel": "Hủy"
+  },
+  "alert": {
+    "delete": {
+      "title": "Bạn có chắc không?",
+      "text": "Hành động này sẽ không thể hoàn tác!",
+      "confirm": "Vâng, hãy xóa!",
+      "cancel": "Hủy"
+    }
   }
 }

@@ -91,6 +91,25 @@
     "position": "Position",
     "role": "Role",
     "image": "Profile image",
-    "save": "Save"
+    "save": "Save",
+    "actions": "Actions",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "message": {
+    "success": "Success!",
+    "error": "Error!",
+    "warning": "Warning!",
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
+  "alert": {
+    "delete": {
+      "title": "Are you sure?",
+      "text": "This action cannot be undone!",
+      "confirm": "Yes, delete it!",
+      "cancel": "Cancel"
+    }
   }
 }
