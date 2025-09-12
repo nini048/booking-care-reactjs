@@ -1,0 +1,72 @@
+// ManageSchedule.scss
+.manage-schedule-container {
+  background: #fff;
+  color: #333;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 60px;
+
+  .title {
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .loading-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-control,
+  .form-select {
+    border-radius: 8px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+
+    &:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+    }
+  }
+
+  .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    justify-content: space-between;
+
+    .time-slot {
+      padding: 0.5rem 1rem;
+      border: 1px solid #0d6efd;
+      border-radius: 8px;
+      background: #fff;
+      color: #0d6efd;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &.selected {
+        background: #0d6efd;
+        color: #fff;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .btn {
+    margin-top: 1rem;
+  }
+}

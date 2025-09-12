@@ -7,7 +7,9 @@ import {
   getTopDoctorHomeService,
   getAllDoctors,
   postInfoDoctor,
-  getDetailInfoDoctor
+  getDetailInfoDoctor,
+  postScheduleDoc,
+  getDoctorSchedule
 } from '../../services/userService';
 import { dispatch } from '../../redux';
 export const fetchAllCodeStart = (inputType) => {
@@ -225,7 +227,7 @@ export const postInfoDetailDoctor = (data) => {
         dispatch({
           type: actionTypes.POST_INFO_DOCTOR_SUCCESS,
         })
-        // dispatch(fetchInfoDetailDoctor(data.id))
+        dispatch(fetchInfoDetailDoctor(data.id))
       }
       else {
         dispatch({ type: actionTypes.POST_INFO_DOCTOR_FAILED })
@@ -243,6 +245,36 @@ export const postInfoDetailDoctor = (data) => {
     }
   }
 }
+export const postScheduleDoctor = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: actionTypes.POST_SCHEDULE_DOCTOR_START
+
+      })
+      let res = await postScheduleDoc(data)
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.POST_SCHEDULE_DOCTOR_SUCCESS
+        })
+      }
+      else {
+        dispatch({ type: actionTypes.POST_SCHEDULE_DOCTOR_FAILED })
+      }
+      return res
+    }
+
+    catch (e) {
+
+      dispatch({ type: actionTypes.POST_SCHEDULE_DOCTOR_FAILED })
+      return {
+        errorCode: 1,
+        message: 'Post schedule doctor failed'
+      };
+    }
+  }
+}
+
 export const fetchInfoDetailDoctor = (id) => {
   return async (dispatch) => {
     try {
@@ -276,3 +308,39 @@ export const fetchInfoDetailDoctor = (id) => {
     }
   }
 }
+export const fetchScheduleDoctor = (doctorId, date) => {
+  return async (dispatch) => {
+    try {
+
+      dispatch({
+        type: actionTypes.FETCH_SCHEDULE_DOCTOR_START
+      })
+      let res = await getDoctorSchedule(doctorId, date)
+      if (res && res.errorCode === 0) {
+
+        dispatch({
+          type: actionTypes.FETCH_SCHEDULE_DOCTOR_SUCCESS,
+          data: res
+        })
+      }
+      else {
+        dispatch({
+          type: actionTypes.FETCH_SCHEDULE_DOCTOR_FAILED
+        })
+      }
+      return res
+
+    }
+    catch (e) {
+
+      dispatch({
+        type: actionTypes.FETCH_SCHEDULE_DOCTOR_FAILED
+      })
+      return {
+        errorCode: 1,
+        message: 'Fetch schedule failed'
+      };
+    }
+  }
+}
+

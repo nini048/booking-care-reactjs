@@ -38,6 +38,14 @@
     "save-success": "Lưu thông tin bác sĩ thành công!",
     "update": "Cập nhật"
   },
+  "doctor-detail": {
+    "loading": "Đang tải thông tin bác sĩ...",
+    "no-description": "Chưa có mô tả.",
+    "schedule": "Lịch khám",
+    "detail-info": "Thông tin chi tiết",
+    "no-detail-info": "Chưa có thông tin chi tiết.",
+    "patient-opinion": "Ý kiến của bệnh nhân"
+  },
   "common": {
     "search": "Tìm kiếm",
     "add": "Thêm",
@@ -78,13 +86,17 @@
       "manage-doctor": "Quản lý bác sĩ",
       "manage-admin": "Quản lý admin",
       "crud": "CRUD user",
-      "crud-redux": "CRUD redux user",
+      "crud-redux": "Quản lý người dùng",
       "clinic": "Phòng khám",
       "manage-clinic": "Quản lý phòng khám",
       "specialty": "Chuyên khoa",
       "manage-specialty": "Quản lý chuyên khoa",
       "handbook": "Cẩm nang",
       "manage-handbook": "Quản lý cẩm nang"
+    },
+    "doctor": {
+      "manage-schedule": "Quản lý kế hoạch khám bệnh",
+      "schedule": "Lịch khám của bác sĩ"
     }
   },
   "manage-user": {

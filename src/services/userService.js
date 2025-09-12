@@ -37,3 +37,9 @@ export const getDetailInfoDoctor = (id) => {
   return axios.get(`/api/get-info-doctor?id=${id}`)
 }
 
+export const postScheduleDoc = (data) => {
+  return axios.post('/api/post-schedule-doctor', data);
+};
+export const getDoctorSchedule = (doctorId, date) => {
+  return axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`)
+}

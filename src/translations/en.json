@@ -35,6 +35,14 @@
     "save-success": "Doctor information saved successfully!",
     "update": "Update"
   },
+  "doctor-detail": {
+    "loading": "Loading doctor info...",
+    "no-description": "No description.",
+    "schedule": "Schedule",
+    "detail-info": "Detail information",
+    "no-detail-info": "No detailed information.",
+    "patient-opinion": "Patient feedback"
+  },
   "common": {
     "search": "Search",
     "add": "Add",
@@ -70,17 +78,21 @@
       }
     },
     "admin": {
-      "manage-user": "User Management",
+      "manage-user": "Management",
       "manage-doctor": "Doctor Management",
       "manage-admin": "Admin Management",
       "crud": "CRUD User",
-      "crud-redux": "CRUD Redux User",
+      "crud-redux": "User Manage",
       "clinic": "Clinic",
       "manage-clinic": "Manage Clinics",
       "specialty": "Specialty",
       "manage-specialty": "Specialty Management",
       "handbook": "Handbook",
       "manage-handbook": "Handbook Management"
+    },
+    "doctor": {
+      "manage-schedule": "Manage Schedule",
+      "schedule": "Doctor Schedule"
     }
   },
   "section": {

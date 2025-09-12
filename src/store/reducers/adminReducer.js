@@ -6,10 +6,15 @@ const initialState = {
   genders: [],
   roles: [],
   positions: [],
+  prices: [],
+  payments: [],
+  provinces: [],
+  times: [],
   users: [],
   topDoctors: [],
   doctors: [],
-  infoDoctor: {}
+  infoDoctor: {},
+  scheduleDoctor: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -46,6 +51,41 @@ const adminReducer = (state = initialState, action) => {
 
       }
 
+      if (action.codeType === 'TIME') {
+        return {
+          ...state,
+          times: action.data,
+          isLoading: false
+        }
+
+      }
+      if (action.codeType === 'PRICE') {
+        return {
+          ...state,
+          prices: action.data,
+          isLoading: false
+        }
+
+      }
+      if (action.codeType === 'PAYMENT') {
+        return {
+          ...state,
+          payments: action.data,
+          isLoading: false
+        }
+
+      }
+      if (action.codeType === 'PROVINCE') {
+        return {
+          ...state,
+          provinces: action.data,
+          isLoading: false
+        }
+
+      }
+
+
+
 
       return state
     case actionTypes.FETCH_ALLCODE_FAILED:
@@ -65,6 +105,30 @@ const adminReducer = (state = initialState, action) => {
           ...state, positions: [], isLoading: false
         };
       }
+      if (action.codeType === 'PRICE') {
+        return {
+          ...state, prices: [], isLoading: false
+        };
+      }
+      if (action.codeType === 'PAYMENT') {
+        return {
+          ...state, payments: [], isLoading: false
+        };
+      }
+      if (action.codeType === 'PROVINCE') {
+        return {
+          ...state, provinces: [], isLoading: false
+        };
+      }
+
+
+
+      if (action.codeType === 'TIME') {
+        return {
+          ...state, times: [], isLoading: false
+        };
+      }
+
       return state;
     case actionTypes.FETCH_ALL_USERS_START:
       return {
@@ -148,7 +212,24 @@ const adminReducer = (state = initialState, action) => {
 
 
       }
+    case actionTypes.FETCH_SCHEDULE_DOCTOR_START:
+      return {
+        ...state
+      }
 
+    case actionTypes.FETCH_SCHEDULE_DOCTOR_SUCCESS:
+      return {
+        ...state,
+        scheduleDoctor: action.data
+        // isLoading: false
+      }
+    case actionTypes.FETCH_SCHEDULE_DOCTOR_FAILED:
+      return {
+        ...state,
+        scheduleDoctor: []
+
+
+      }
     default:
       return state;
   }

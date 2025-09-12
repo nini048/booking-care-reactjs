@@ -2,12 +2,14 @@
   max-width: 1140px;
   margin: 0 auto;
   padding: 2rem;
+  color: #333;
+  font-family: 'Segoe UI', Roboto, sans-serif;
 
   .intro-doctor {
     display: flex;
     align-items: center;
     gap: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 
     .content-left {
       flex: 0 0 180px;
@@ -17,7 +19,7 @@
         height: 180px;
         object-fit: cover;
         border-radius: 50%;
-        border: 3px solid #eee;
+        border: 2px solid #ccc;
       }
     }
 
@@ -26,28 +28,108 @@
 
       .doctor-name {
         font-size: 1.8rem;
-        font-weight: bold;
+        font-weight: 600;
         margin-bottom: 0.5rem;
+        color: #111;
       }
 
       .doctor-description {
         font-size: 1rem;
         color: #555;
+        line-height: 1.5;
       }
     }
   }
 
-  .schedule-doctor,
-  .detail-info-doctor,
-  .comment-doctor {
-    background: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
+  /* Lịch khám + thông tin */
+  .schedule-info-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+
+    .schedule-column,
+    .info-column {
+      background: none; // bỏ nền
+      padding: 0;
+
+      h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 0.3rem;
+      }
+
+      .info-item {
+        margin-bottom: 1.5rem;
+
+        h4 {
+          font-size: 1.1rem;
+          font-weight: 500;
+          margin-bottom: 0.3rem;
+        }
+
+        p {
+          font-size: 1rem;
+          color: #555;
+          margin-bottom: 0.3rem;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Thông tin chi tiết */
+  .detail-info-doctor {
+    margin-bottom: 2rem;
 
     h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
       margin-bottom: 1rem;
-      font-size: 1.2rem;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.3rem;
+    }
+
+    .markdown-content {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.6;
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  /* Bình luận */
+  .comment-doctor {
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.3rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.5;
     }
   }
 }
