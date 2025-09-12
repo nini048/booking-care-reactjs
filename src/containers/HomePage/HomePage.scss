@@ -6,6 +6,7 @@
      display: flex !important; // mỗi slide là flex container
      justify-content: center !important; // căn giữa ngang
      align-items: center !important; // căn giữa dọc (nếu cần)
+     cursor: pointer;
    }
 
    &.section-specialty {

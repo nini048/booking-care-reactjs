@@ -5,8 +5,11 @@ import {
   createNewUserService, deleteUser,
   getAllCodeService, getAllUsers, putEditUser,
   getTopDoctorHomeService,
-  getAllDoctors
+  getAllDoctors,
+  postInfoDoctor,
+  getDetailInfoDoctor
 } from '../../services/userService';
+import { dispatch } from '../../redux';
 export const fetchAllCodeStart = (inputType) => {
 
   return async (dispatch, getState) => {
@@ -207,6 +210,69 @@ export const fetchAllDoctors = () => {
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ALL_DOCTORS_FAILED });
       return { errorCode: 1, message: 'Fetch users error' };
+    }
+  }
+}
+export const postInfoDetailDoctor = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: actionTypes.POST_INFO_DOCTOR_START
+
+      })
+      let res = await postInfoDoctor(data)
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.POST_INFO_DOCTOR_SUCCESS,
+        })
+        // dispatch(fetchInfoDetailDoctor(data.id))
+      }
+      else {
+        dispatch({ type: actionTypes.POST_INFO_DOCTOR_FAILED })
+      }
+      return res
+    }
+
+    catch (e) {
+
+      dispatch({ type: actionTypes.POST_INFO_DOCTOR_FAILED });
+      return {
+        errorCode: 1,
+        message: 'Post info doctor failed'
+      };
+    }
+  }
+}
+export const fetchInfoDetailDoctor = (id) => {
+  return async (dispatch) => {
+    try {
+
+      dispatch({
+        type: actionTypes.FETCH_INFO_DOCTOR_START
+      })
+      let res = await getDetailInfoDoctor(id)
+      if (res && res.errorCode === 0) {
+
+        dispatch({
+          type: actionTypes.FETCH_INFO_DOCTOR_SUCCESS,
+          data: res
+        })
+      }
+      else {
+        dispatch({
+          type: actionTypes.FETCH_INFO_DOCTOR_FAILED
+        })
+      }
+      return res
+
+    }
+    catch (e) {
+
+      dispatch({ type: actionTypes.FETCH_INFO_DOCTOR_FAILED });
+      return {
+        errorCode: 1,
+        message: 'Fetch info doctor failed'
+      };
     }
   }
 }

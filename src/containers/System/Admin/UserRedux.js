@@ -33,18 +33,29 @@ const UserRedux = () => {
   }, [dispatch]);
 
   const validationSchema = Yup.object({
-    email: Yup.string().email("Email không hợp lệ").required("Email bắt buộc"),
-    password: Yup.string().min(6, "Mật khẩu ít nhất 6 ký tự").required("Mật khẩu bắt buộc"),
-    firstName: Yup.string().required("Họ bắt buộc"),
-    lastName: Yup.string().required("Tên bắt buộc"),
+    email: Yup.string()
+      .email(translateMessage("Invalid email / Email không hợp lệ", language))
+      .required(translateMessage("Email is required / Email bắt buộc", language)),
+    password: Yup.string()
+      .min(6, translateMessage("Password must be at least 6 characters / Mật khẩu ít nhất 6 ký tự", language))
+      .required(translateMessage("Password is required / Mật khẩu bắt buộc", language)),
+    firstName: Yup.string()
+      .required(translateMessage("First name is required / Họ bắt buộc", language)),
+    lastName: Yup.string()
+      .required(translateMessage("Last name is required / Tên bắt buộc", language)),
     phoneNumber: Yup.string()
-      .matches(/^[0-9]{10,15}$/, "Số điện thoại không hợp lệ")
-      .required("Số điện thoại bắt buộc"),
-    address: Yup.string().required("Địa chỉ bắt buộc"),
-    gender: Yup.string().required("Giới tính bắt buộc"),
-    role: Yup.string().required("Role bắt buộc"),
-    position: Yup.string().required("Chức vụ bắt buộc"),
-    image: Yup.mixed().required("Avatar bắt buộc"),
+      .matches(/^[0-9]{10,15}$/, translateMessage("Invalid phone number / Số điện thoại không hợp lệ", language))
+      .required(translateMessage("Phone number is required / Số điện thoại bắt buộc", language)),
+    address: Yup.string()
+      .required(translateMessage("Address is required / Địa chỉ bắt buộc", language)),
+    gender: Yup.string()
+      .required(translateMessage("Gender is required / Giới tính bắt buộc", language)),
+    role: Yup.string()
+      .required(translateMessage("Role is required / Role bắt buộc", language)),
+    position: Yup.string()
+      .required(translateMessage("Position is required / Chức vụ bắt buộc", language)),
+    image: Yup.mixed()
+      .required(translateMessage("Avatar is required / Avatar bắt buộc", language)),
   });
 
   const initialValues = {

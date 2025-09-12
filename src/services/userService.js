@@ -30,4 +30,10 @@ export const getTopDoctorHomeService = (limit) => {
 export const getAllDoctors = () => {
   return axios.get('api/get-all-doctors')
 }
+export const postInfoDoctor = (data) => {
+  return axios.post('api/post-info-doctor', data)
+}
+export const getDetailInfoDoctor = (id) => {
+  return axios.get(`/api/get-info-doctor?id=${id}`)
+}
 

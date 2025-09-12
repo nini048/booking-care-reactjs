@@ -22,6 +22,7 @@ import { CustomToastCloseButton } from "../components/CustomToast";
 import ConfirmModal from "../components/ConfirmModal";
 import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from '../components/CustomScrollbars.js'
+import DetailDoctor from "./Patient/Doctor/DetailDoctor";
 const App = ({ persistor, onBeforeLift }) => {
   const [bootstrapped, setBootstrapped] = useState(false);
 
@@ -67,6 +68,7 @@ const App = ({ persistor, onBeforeLift }) => {
                   component={userIsAuthenticated(System)}
                 />
                 <Route path={path.HOMEPAGE} component={HomePage} />
+                <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
               </Switch>
 
             </CustomScrollbars>

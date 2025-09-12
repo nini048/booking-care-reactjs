@@ -28,7 +28,9 @@ const HomePage = () => {
   };
   return (
     <div>
-      <HomeHeader />
+      <HomeHeader
+        isShowBanner={true}
+      />
       <Specialty
         settings={settings}
       />

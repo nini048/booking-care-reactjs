@@ -32,7 +32,8 @@
     "description": "Introduction:",
     "markdown": "Markdown Content:",
     "save": "Save",
-    "save-success": "Doctor information saved successfully!"
+    "save-success": "Doctor information saved successfully!",
+    "update": "Update"
   },
   "common": {
     "search": "Search",

@@ -11,15 +11,18 @@ import logo from '../../assets/images/logo.png'
 import { FormattedMessage, useIntl } from 'react-intl';
 import { LANGUAGES } from '../../utils/constant';
 import { changeLanguageApp } from '../../store/actions/userActions'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const HomeHeader = (props) => {
+  const { isShowBanner } = props
   const intl = useIntl();
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   console.log(useSelector((state) => state.user))
   const language = useSelector((state) => state.app.language)
   const linkToRedirect = isLoggedIn ? '/system/user-manage' : '/home';
+  const history = useHistory()
   const dispatch = useDispatch();
   const changeLanguage = (language) => {
     dispatch({
@@ -28,7 +31,9 @@ const HomeHeader = (props) => {
     })
   }
   console.log(language)
-
+  const handleReturnHome = () => {
+    history.push('/home')
+  }
 
   return (
     <React.Fragment>
@@ -36,7 +41,8 @@ const HomeHeader = (props) => {
         <div className='home-header-content'>
           <div className='left-content'>
             <IoMdMenu size={24} cursor='pointer' />
-            <img src={logo} />
+            <img src={logo}
+              onClick={() => { handleReturnHome() }} />
             <div className='header-logo'>
 
             </div>
@@ -95,70 +101,75 @@ const HomeHeader = (props) => {
           </div>
         </div>
       </div>
-      <div className='home-header-banner'>
-        <div className='title1'>
-          <FormattedMessage id='banner.title1' />
-        </div>
-        <div className='title2'>
-          <FormattedMessage id='banner.title2' />
-        </div>
-        <div className='search'>
-          <FaSearch />
-          <input type='text'
-            placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
-        </div>
-        <div className='options'>
-          <div className='option-child'>
-            <div className='icon-child'>
-              <FaRegHospital size={30} />
-            </div>
-            <div className='text-child'>
-              <FormattedMessage id='option.specialist' />
-            </div>
-          </div>
-          <div className='option-child'>
-            <div className='icon-child'>
-              <FaMobile size={30} />
-            </div>
-            <div className='text-child'>
-              <FormattedMessage id='option.remote' />
-            </div>
-          </div>
-          <div className='option-child'>
-            <div className='icon-child'>
-              <FaHospital size={30} />
-            </div>
-            <div className='text-child'>
-              <FormattedMessage id='option.general' />
+      {isShowBanner && (
 
-            </div>
+        <div className='home-header-banner'>
+          <div className='title1'>
+            <FormattedMessage id='banner.title1' />
           </div>
-          <div className='option-child'>
-            <div className='icon-child'>
-              <FaMicroscope size={30} />
-            </div>
-            <div className='text-child'>
-              <FormattedMessage id='option.lab' />
-            </div>
+          <div className='title2'>
+            <FormattedMessage id='banner.title2' />
           </div>
-          <div className='option-child'>
-            <div className='icon-child'>
-              <FaBrain size={30} />
-            </div>
-            <div className='text-child'>
-              <FormattedMessage id='option.mental' />
-            </div>
+          <div className='search'>
+            <FaSearch />
+            <input type='text'
+              placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
           </div>
-          <div className='option-child'>
-            <div className='icon-child'>
-              <FaTooth size={30} />
+          <div className='options'>
+            <div className='option-child'>
+              <div className='icon-child'>
+                <FaRegHospital size={30} />
+              </div>
+              <div className='text-child'>
+                <FormattedMessage id='option.specialist' />
+              </div>
             </div>
-            <div className='text-child'>
-              <FormattedMessage id='option.dental' />
+            <div className='option-child'>
+              <div className='icon-child'>
+                <FaMobile size={30} />
+              </div>
+              <div className='text-child'>
+                <FormattedMessage id='option.remote' />
+              </div>
             </div>
+            <div className='option-child'>
+              <div className='icon-child'>
+                <FaHospital size={30} />
+              </div>
+              <div className='text-child'>
+                <FormattedMessage id='option.general' />
+
+              </div>
+            </div>
+            <div className='option-child'>
+              <div className='icon-child'>
+                <FaMicroscope size={30} />
+              </div>
+              <div className='text-child'>
+                <FormattedMessage id='option.lab' />
+              </div>
+            </div>
+            <div className='option-child'>
+              <div className='icon-child'>
+                <FaBrain size={30} />
+              </div>
+              <div className='text-child'>
+                <FormattedMessage id='option.mental' />
+              </div>
+            </div>
+            <div className='option-child'>
+              <div className='icon-child'>
+                <FaTooth size={30} />
+              </div>
+              <div className='text-child'>
+                <FormattedMessage id='option.dental' />
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
+      )}
+
     </React.Fragment>
 
   );
