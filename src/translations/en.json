@@ -33,7 +33,13 @@
     "markdown": "Markdown Content:",
     "save": "Save",
     "save-success": "Doctor information saved successfully!",
-    "update": "Update"
+    "update": "Update",
+    "price": "Price",
+    "payment": "Payment",
+    "city": "City",
+    "address-clinic": "Clinic Address",
+    "name-clinic": "Clinic Name",
+    "note": "Note"
   },
   "doctor-detail": {
     "loading": "Loading doctor info...",
@@ -41,7 +47,10 @@
     "schedule": "Schedule",
     "detail-info": "Detail information",
     "no-detail-info": "No detailed information.",
-    "patient-opinion": "Patient feedback"
+    "patient-opinion": "Patient feedback",
+    "clinic-info": "Clinic Information",
+    "price-payment": "Payment Invoice",
+    "other-info": "Other Information"
   },
   "common": {
     "search": "Search",

@@ -48,9 +48,8 @@
     gap: 2rem;
     margin-bottom: 2rem;
 
-    .schedule-column,
-    .info-column {
-      background: none; // bỏ nền
+    .schedule-column {
+      background: none;
       padding: 0;
 
       h3 {
@@ -60,20 +59,37 @@
         border-bottom: 2px solid #eee;
         padding-bottom: 0.3rem;
       }
+    }
+
+    .info-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      background: none;
+      padding: 0;
+      margin-left: 1rem;
 
       .info-item {
-        margin-bottom: 1.5rem;
+        background: none;
+        padding: 1rem;
+        // border-radius: 8px;
+        // box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 
         h4 {
           font-size: 1.1rem;
           font-weight: 500;
-          margin-bottom: 0.3rem;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
         }
 
         p {
-          font-size: 1rem;
+          font-size: 0.95rem;
           color: #555;
           margin-bottom: 0.3rem;
+
+          strong {
+            color: #333;
+          }
         }
       }
     }

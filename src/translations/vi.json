@@ -36,7 +36,13 @@
     "markdown": "Nội dung Markdown:",
     "save": "Lưu",
     "save-success": "Lưu thông tin bác sĩ thành công!",
-    "update": "Cập nhật"
+    "update": "Cập nhật",
+    "price": "Giá",
+    "payment": "Thanh toán",
+    "city": "Thành phố",
+    "address-clinic": "Địa chỉ phòng khám",
+    "name-clinic": "Tên phòng khám",
+    "note": "Ghi chú"
   },
   "doctor-detail": {
     "loading": "Đang tải thông tin bác sĩ...",
@@ -44,7 +50,10 @@
     "schedule": "Lịch khám",
     "detail-info": "Thông tin chi tiết",
     "no-detail-info": "Chưa có thông tin chi tiết.",
-    "patient-opinion": "Ý kiến của bệnh nhân"
+    "patient-opinion": "Ý kiến của bệnh nhân",
+    "clinic-info": "Thông tin phòng khám",
+    "price-payment": "Hoá đơn thanh toán",
+    "other-info": "Thông tin khác"
   },
   "common": {
     "search": "Tìm kiếm",

@@ -47,9 +47,6 @@ const ManageDoctor = () => {
     label: `${doc.firstName} ${doc.lastName}`,
   }));
 
-  console.log('provices:', provinces)
-  console.log('price:', prices)
-  console.log('payments:', payments)
   const priceOptions = prices?.map(p => ({
     value: p.keyMap,
     label: language === "vi" ? p.valueVi : p.valueEn,
@@ -70,7 +67,7 @@ const ManageDoctor = () => {
       translateMessage("Please select a doctor / Vui lòng chọn bác sĩ", language)
     ),
     description: Yup.string().required(
-      translateMessage("Please emter description / Vui lòng nhập mô tả", language)
+      translateMessage("Please enter description / Vui lòng nhập mô tả", language)
     ),
     contentMarkdown: isUpdate
       ? Yup.string().nullable()
@@ -88,6 +85,22 @@ const ManageDoctor = () => {
           language
         )
       ),
+    priceId: Yup.string().required(
+      translateMessage("Please select a price / Vui lòng chọn giá khám", language)
+    ),
+    paymentId: Yup.string().required(
+      translateMessage("Please select a payment method / Vui lòng chọn phương thức thanh toán", language)
+    ),
+    provinceId: Yup.string().required(
+      translateMessage("Please select a province / Vui lòng chọn tỉnh/thành phố", language)
+    ),
+    addressClinic: Yup.string().required(
+      translateMessage("Please enter clinic address / Vui lòng nhập địa chỉ phòng khám", language)
+    ),
+    nameClinic: Yup.string().required(
+      translateMessage("Please enter clinic name / Vui lòng nhập tên phòng khám", language)
+    ),
+    note: Yup.string().nullable(), // Không bắt buộc
   });
 
   useEffect(() => {
@@ -98,15 +111,55 @@ const ManageDoctor = () => {
     if (selected) {
       setSelectedDoctor(selected);
       setFieldValue("doctorId", selected.value);
-      dispatch(fetchInfoDetailDoctor(selected.value));
+      dispatch(fetchInfoDetailDoctor(selected.value)).then((res) => {
+        const info = res?.data || {};
+        // Set Markdown
+        if (info.markdownData) {
+          setMarkdownValue({
+            contentMarkdown: info.markdownData.contentMarkdown || "",
+            contentHTML: info.markdownData.contentHTML || "",
+          });
+          setFieldValue("description", info.markdownData.description || "");
+        } else {
+          setMarkdownValue({ contentMarkdown: "", contentHTML: "" });
+          setFieldValue("description", "");
+        }
+        // Set các trường khác
+        if (info.doctorInfo) {
+          setFieldValue("priceId", info.doctorInfo.priceId || "");
+          setFieldValue("paymentId", info.doctorInfo.paymentId || "");
+          setFieldValue("provinceId", info.doctorInfo.provinceId || "");
+          setFieldValue("addressClinic", info.doctorInfo.addressClinic || "");
+          setFieldValue("nameClinic", info.doctorInfo.nameClinic || "");
+          setFieldValue("note", info.doctorInfo.note || "");
+          setFieldValue("count", info.doctorInfo.count || 0);
+        } else {
+          setFieldValue("priceId", "");
+          setFieldValue("paymentId", "");
+          setFieldValue("provinceId", "");
+          setFieldValue("addressClinic", "");
+          setFieldValue("nameClinic", "");
+          setFieldValue("note", "");
+          setFieldValue("count", 0);
+        }
+        setIsUpdate(!!info.markdownData);
+      });
     } else {
+      // Reset form khi bỏ chọn
+      setSelectedDoctor(null);
       setFieldValue("doctorId", "");
       setFieldValue("description", "");
       setMarkdownValue({ contentMarkdown: "", contentHTML: "" });
+      setFieldValue("priceId", "");
+      setFieldValue("paymentId", "");
+      setFieldValue("provinceId", "");
+      setFieldValue("addressClinic", "");
+      setFieldValue("nameClinic", "");
+      setFieldValue("note", "");
+      setFieldValue("count", 0);
       setIsUpdate(false);
     }
   };
-
   useEffect(() => {
     if (infoDoctor && infoDoctor.markdownData) {
       setIsUpdate(true);
@@ -121,14 +174,20 @@ const ManageDoctor = () => {
   }, [infoDoctor]);
 
   const handleSave = async (values, { resetForm, setValues }) => {
+    console.log('values', values)
     const res = await dispatch(
       postInfoDetailDoctor({
-        ...values,
-        contentMarkdown: markdownValue.contentMarkdown,
-        contentHTML: markdownValue.contentHTML,
-        description: values.description,
-        id: values.doctorId,
-        action: isUpdate ? "UPDATE" : "CREATE",
+        doctorId: values.doctorId,                 // ID bác sĩ
+        description: values.description,           // Mô tả
+        contentMarkdown: markdownValue.contentMarkdown, // Markdown
+        contentHTML: markdownValue.contentHTML,    // HTML
+        priceId: values.priceId,                   // Giá khám
+        paymentId: values.paymentId,               // Phương thức thanh toán
+        provinceId: values.provinceId,             // Tỉnh/TP
+        addressClinic: values.addressClinic,       // Địa chỉ phòng khám
+        nameClinic: values.nameClinic,             // Tên phòng khám
+        note: values.note,                         // Ghi chú
+        count: values.count || 0,                  // Số lượt khám (nếu cần)
       })
     );
 
@@ -179,9 +238,9 @@ const ManageDoctor = () => {
             description: infoDoctor?.markdownData?.description || "",
             contentMarkdown: infoDoctor?.markdownData?.contentMarkdown || "",
             contentHTML: infoDoctor?.markdownData?.contentHTML || "",
-            priceId: infoDoctor?.doctorInfo?.priceld || "",
+            priceId: infoDoctor?.doctorInfo?.priceId || "",
             paymentId: infoDoctor?.doctorInfo?.paymentId || "",
-            provinceId: infoDoctor?.doctorInfo?.provinceld || "",
+            provinceId: infoDoctor?.doctorInfo?.provinceId || "",
             addressClinic: infoDoctor?.doctorInfo?.addressClinic || "",
             nameClinic: infoDoctor?.doctorInfo?.nameClinic || "",
             note: infoDoctor?.doctorInfo?.note || "",
@@ -218,44 +277,65 @@ const ManageDoctor = () => {
               {/* Select thông tin phòng khám */}
               <div className="row mt-4 g-4">
                 <div className="col-lg-4">
-                  <label className="form-label">Giá khám</label>
+                  <label className="form-label">
+                    <FormattedMessage id="manage-doctor.price" />
+                  </label>
                   <Select
                     value={priceOptions?.find(opt => opt.value === values.priceId) || null}
                     onChange={selected => setFieldValue("priceId", selected?.value)}
                     options={priceOptions}
                   />
+                  <ErrorMessage name="priceId" component="div" className="text-danger" />
                 </div>
 
                 <div className="col-lg-4">
-                  <label className="form-label">Phương thức thanh toán</label>
+                  <label className="form-label">
+                    <FormattedMessage id="manage-doctor.payment" />
+
+                  </label>
+
                   <Select
                     value={paymentOptions?.find(opt => opt.value === values.paymentId) || null}
                     onChange={selected => setFieldValue("paymentId", selected?.value)}
                     options={paymentOptions}
                   />
+                  <ErrorMessage name="paymentId" component="div" className="text-danger" />
                 </div>
 
                 <div className="col-lg-4">
-                  <label className="form-label">Tỉnh / Thành phố</label>
+                  <label className="form-label">
+                    <FormattedMessage id="manage-doctor.city" />
+                  </label>
                   <Select
                     value={provinceOptions?.find(opt => opt.value === values.provinceId) || null}
                     onChange={selected => setFieldValue("provinceId", selected?.value)}
                     options={provinceOptions}
                   />
+                  <ErrorMessage name="provinceId" component="div" className="text-danger" />
+
                 </div>
 
                 <div className="col-lg-6">
-                  <label className="form-label">Địa chỉ phòng khám</label>
+                  <label className="form-label">
+                    <FormattedMessage id="manage-doctor.address-clinic" />
+
+                  </label>
                   <Field type="text" className="form-control" name="addressClinic" />
+                  <ErrorMessage name="addressClinic" component="div" className="text-danger" />
                 </div>
 
                 <div className="col-lg-6">
-                  <label className="form-label">Tên phòng khám</label>
+                  <label className="form-label">
+                    <FormattedMessage id="manage-doctor.name-clinic" />
+                  </label>
                   <Field type="text" className="form-control" name="nameClinic" />
+                  <ErrorMessage name="nameClinic" component="div" className="text-danger" />
                 </div>
 
                 <div className="col-12">
-                  <label className="form-label">Ghi chú</label>
+                  <label className="form-label">
+                    <FormattedMessage id="manage-doctor.note" />
+                  </label>
                   <Field as="textarea" className="form-control" rows={3} name="note" />
                 </div>
               </div>

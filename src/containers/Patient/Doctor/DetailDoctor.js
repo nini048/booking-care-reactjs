@@ -13,6 +13,13 @@ const DetailDoctor = () => {
   const language = useSelector(state => state.app.language)
   const inforDoctor = useSelector(state => state.admin.infoDoctor);
 
+  const prices = useSelector(state => state.admin.prices);
+  const payments = useSelector(state => state.admin.payments);
+  const provinces = useSelector(state => state.admin.provinces);
+
+  const priceLabel = prices?.find(p => p.keyMap === inforDoctor.doctorInfo?.priceId)?.valueVi;
+  const paymentLabel = payments?.find(p => p.keyMap === inforDoctor.doctorInfo?.paymentId)?.valueVi;
+  const provinceLabel = provinces?.find(p => p.keyMap === inforDoctor.doctorInfo?.provinceId)?.valueVi;
   useEffect(() => {
     dispatch(fetchInfoDetailDoctor(+id));
   }, [dispatch, id]);
@@ -63,20 +70,21 @@ const DetailDoctor = () => {
 
           <div className='info-column'>
             <div className='info-item'>
-              <h4><FormattedMessage id='doctor-detail.address' /></h4>
-              <p>{inforDoctor.address || '123 Đường ABC, Quận X, TP.HCM'}</p>
+              <h4><FormattedMessage id='doctor-detail.clinic-info' /></h4>
+              <p><strong>Phòng khám:</strong> {inforDoctor.doctorInfo?.nameClinic || 'Chưa có'}</p>
+              <p><strong>Địa chỉ:</strong> {inforDoctor.doctorInfo?.addressClinic || 'Chưa có'}</p>
             </div>
 
             <div className='info-item'>
-              <h4><FormattedMessage id='doctor-detail.payment' /></h4>
-              <p>Giá khám: 200.000 VNĐ</p>
-              <p>Thanh toán: Tiền mặt / Thẻ / Momo</p>
+              <h4><FormattedMessage id='doctor-detail.price-payment' /></h4>
+              <p><strong>Giá khám:</strong> {priceLabel || 'Chưa có'}</p>
+              <p><strong>Thanh toán:</strong> {paymentLabel || 'Chưa có'}</p>
             </div>
 
             <div className='info-item'>
               <h4><FormattedMessage id='doctor-detail.other-info' /></h4>
-              <p>Hỗ trợ bảo hiểm y tế</p>
-              <p>Đặt lịch trước 1 ngày</p>
+              <p><strong>Ghi chú:</strong> {inforDoctor.doctorInfo?.note || 'Không có thông tin'}</p>
+              <p><strong>Số lượt khám:</strong> {inforDoctor.doctorInfo?.count || 0}</p>
             </div>
           </div>
         </div>
