@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllUsersStart, fetchInfoDetailDoctor } from '../../../store/actions';
 import { FormattedMessage } from 'react-intl';
 import DoctorSchedule from './DoctorSchedule';
+import { translateMessage } from '../../../utils/translateMessage';
 
 const DetailDoctor = () => {
   const { id } = useParams();
@@ -70,19 +71,41 @@ const DetailDoctor = () => {
             <DoctorSchedule doctorId={id} />
           </div>
 
-          <div className='info-column'>
-            <div className='info-item'>
-              <h4><FormattedMessage id='doctor-detail.clinic-info' /></h4>
-              <p><strong>Phòng khám:</strong> {inforDoctor.doctorInfo?.nameClinic || 'Chưa có'}</p>
-              <p><strong>Địa chỉ:</strong> {inforDoctor.doctorInfo?.addressClinic || 'Chưa có'}</p>
+          <div className="info-column">
+            <div className="info-item">
+              <h4><FormattedMessage id="doctor-detail.clinic-info" /></h4>
+              <div className="clinic-name">
+                <span><FormattedMessage id='doctor-detail.clinic-name' />:</span>
+                <span> {inforDoctor.doctorInfo?.nameClinic ||
+                  translateMessage("No information / Chưa có thông tin", language)
+                }
+                </span>
+              </div>
+              <div className="clinic-address">
+                <span><FormattedMessage id='doctor-detail.clinic-address' />:</span>
+                <span> {inforDoctor.doctorInfo?.addressClinic ||
+                  translateMessage("No information / Chưa có thông tin", language)
+                }
+                </span>
+              </div>
             </div>
-
-            <div className='info-item'>
-              <h4><FormattedMessage id='doctor-detail.price-payment' /></h4>
-              <p><strong>Giá khám:</strong> {price || 'Chưa có'}</p>
-              <p><strong>Thanh toán:</strong> {payment || 'Chưa có'}</p>
+            <div className="info-item">
+              <h4><FormattedMessage id="doctor-detail.price-payment" /></h4>
+              <div className="price">
+                <span><FormattedMessage id='doctor-detail.price' />:</span>
+                <span> {price ||
+                  translateMessage("No information / Chưa có thông tin", language)
+                }
+                </span>
+              </div>
+              <div className="payment">
+                <span><FormattedMessage id='doctor-detail.payment' />:</span>
+                <span> {payment ||
+                  translateMessage("No information / Chưa có thông tin", language)
+                }
+                </span>
+              </div>
             </div>
-
           </div>
         </div>
 

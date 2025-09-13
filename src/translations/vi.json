@@ -53,7 +53,11 @@
     "patient-opinion": "Ý kiến của bệnh nhân",
     "clinic-info": "Thông tin phòng khám",
     "price-payment": "Hoá đơn thanh toán",
-    "other-info": "Thông tin khác"
+    "other-info": "Thông tin khác",
+    "clinic-name": "Tên phòng khám",
+    "clinic-address": "Địa chỉ",
+    "price": "Giá khám",
+    "payment": "Thanh toán"
   },
   "common": {
     "search": "Tìm kiếm",

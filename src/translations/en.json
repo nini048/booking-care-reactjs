@@ -50,7 +50,11 @@
     "patient-opinion": "Patient feedback",
     "clinic-info": "Clinic Information",
     "price-payment": "Payment Invoice",
-    "other-info": "Other Information"
+    "other-info": "Other Information",
+    "clinic-name": "Clinic Name",
+    "clinic-address": "Address",
+    "price": "Examination Fee",
+    "payment": "Payment"
   },
   "common": {
     "search": "Search",
