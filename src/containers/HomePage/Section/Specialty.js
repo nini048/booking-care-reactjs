@@ -1,14 +1,20 @@
 import React from "react";
 import Slider from "react-slick";
 import specialtyImg from '../../../assets/specialty/co-xuong-khop.jpeg'
+import { FormattedMessage } from 'react-intl';
+
 const Specialty = (props) => {
   let { settings } = props
   return (
     <div className=' section-share section-specialty'>
       <div className='section-container'>
         <div className='section-header'>
-          <span className='title-section'>Chuyên khoa phổ biến</span>
-          <button className=' btn-section btn btn-light'>Xem thêm</button>
+          <span className='title-section'>
+            <FormattedMessage id='section.specialty' />
+          </span>
+          <button className=' btn-section btn btn-light'>
+            <FormattedMessage id='common.view-more' />
+          </button>
         </div>
         <div className='section-body'>
           <Slider {...settings}>

@@ -75,7 +75,8 @@
     "forbiden-request": "Forbidden Request",
     "fail-to-load-all-code": "Failed to load data from allcode",
     "sum": "Total",
-    "date-range-invalid": "Invalid date range"
+    "date-range-invalid": "Invalid date range",
+    "view-more": "View more"
   },
   "menu": {
     "system": {
@@ -109,7 +110,14 @@
     }
   },
   "section": {
-    "outstanding-doctor": "Outstanding Doctors"
+    "outstanding-doctor": "Outstanding Doctors",
+    "specialty": "Popular Specialties",
+    "medical-facility": "Featured Medical Facilities",
+    "handbook": "Handbook",
+    "about": "About"
+  },
+  "about": {
+    "description": "This is an online healthcare system that provides useful medical information and helps users access healthcare services quickly and conveniently.\n\nUsers can easily look up information about doctors, specialties, and book appointments online with just a few simple steps.\n\nWith the goal of improving healthcare quality, the platform not only saves time but also delivers a friendly and modern experience."
   },
   "manage-user": {
     "add": "Add new user",

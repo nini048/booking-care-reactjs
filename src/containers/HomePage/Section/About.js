@@ -2,8 +2,7 @@
 
 import React from 'react';
 import handbookImg from '../../../assets/handbook/handbook.jpg'
-import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 const About = (props) => {
 
@@ -11,7 +10,9 @@ const About = (props) => {
     <div className=' section-share section-about'>
       <div className='section-container'>
         <div className='section-header'>
-          <span className='title-section'>Thông tin thêm</span>
+          <span className='title-section'>
+            <FormattedMessage id='section.about' />
+          </span>
         </div>
         <div className='section-about-content'>
           <div className='content-left'>
@@ -27,18 +28,8 @@ const About = (props) => {
             ></iframe>
           </div>
           <div className='content-right'>
-            <p>
-              Đây là hệ thống chăm sóc sức khỏe trực tuyến, cung cấp thông tin
-              hữu ích về y tế và hỗ trợ người dùng trong việc tiếp cận dịch vụ y tế
-              nhanh chóng và tiện lợi.
-            </p>
-            <p>
-              Người dùng có thể dễ dàng tra cứu thông tin về bác sĩ, chuyên khoa,
-              cũng như đặt lịch khám trực tuyến chỉ với vài thao tác đơn giản.
-            </p>
-            <p>
-              Với mục tiêu nâng cao chất lượng dịch vụ y tế, nền tảng không chỉ
-              giúp tiết kiệm thời gian mà còn mang đến trải nghiệm thân thiện và hiện đại.
+            <p style={{ whiteSpace: "pre-line" }}>
+              <FormattedMessage id="about.description" />
             </p>
           </div>
         </div>

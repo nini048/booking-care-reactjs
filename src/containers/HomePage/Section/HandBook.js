@@ -1,9 +1,8 @@
 
 import React from 'react';
 import handbookImg from '../../../assets/handbook/handbook.jpg'
-import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Slider from "react-slick";
+import { FormattedMessage } from 'react-intl';
 
 const HandBook = (props) => {
   let { settings } = props
@@ -12,8 +11,12 @@ const HandBook = (props) => {
     <div className=' section-share section-handbook'>
       <div className='section-container'>
         <div className='section-header'>
-          <span className='title-section'>Cẩm nang</span>
-          <button className=' btn-section btn btn-light'>Tìm kiếm</button>
+          <span className='title-section'>
+            <FormattedMessage id='section.handbook' />
+          </span>
+          <button className=' btn-section btn btn-light'>
+            <FormattedMessage id='common.search' />
+          </button>
         </div>
         <div className='section-body'>
           <Slider {...settings}>

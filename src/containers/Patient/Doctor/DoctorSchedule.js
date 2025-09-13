@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./DoctorSchedule.scss";
 import { fetchAllCodeStart, fetchScheduleDoctor } from '../../../store/actions';
 import { useDispatch, useSelector } from "react-redux";
-
+import BookingModal from "./Modal/BookingModal";
 import { ThreeDots } from "react-loader-spinner";
 const DoctorSchedule = (props) => {
   const dispatch = useDispatch();
@@ -18,7 +18,9 @@ const DoctorSchedule = (props) => {
 
   const times = useSelector((state) => state.admin.times || []);
   const scheduleDoctor = useSelector(state => state.admin.scheduleDoctor?.data || []);
-
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const doctor = useSelector(state => state.admin.infoDoctor || {});
   // Tạo 7 ngày tiếp theo
   const next7Days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date();
@@ -45,13 +47,13 @@ const DoctorSchedule = (props) => {
     return acc;
   }, {});
 
-  const handleTimeClick = (slotKey) => {
-    if (availabilityMap[slotKey]) return; // bận không chọn
-    if (selectedTimes.includes(slotKey)) {
-      setSelectedTimes(selectedTimes.filter(t => t !== slotKey));
-    } else {
-      setSelectedTimes([...selectedTimes, slotKey]);
-    }
+  const handleTimeClick = (slotKey, slotLabel) => {
+    if (availabilityMap[slotKey]) return; // giờ đã bận
+    setSelectedSlot({
+      value: slotKey,
+      label: slotLabel
+    });
+    setShowModal(true);
   };
 
   console.log('times', times)
@@ -99,7 +101,7 @@ const DoctorSchedule = (props) => {
                   key={slot.keyMap}
                   type="button"
                   className={`time-slot ${booked ? "busy" : "available"} ${selected ? "selected" : ""}`}
-                  onClick={() => handleTimeClick(slot.keyMap)}
+                  onClick={() => handleTimeClick(slot.keyMap, slot.valueVi)}
                   disabled={booked}
                 >
                   {slot.valueVi}
@@ -109,6 +111,14 @@ const DoctorSchedule = (props) => {
           </div>
         )
       )}
+      <BookingModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        selectedSlot={selectedSlot}
+        doctor={doctor}
+        slot={selectedSlot}
+        date={selectedDate}
+      />
     </div>
   );
 };

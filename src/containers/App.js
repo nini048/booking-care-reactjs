@@ -4,8 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter as Router } from "connected-react-router";
 import { history } from "../redux";
 import { ToastContainer } from "react-toastify";
-
-
+import ScrollToTop from "./ScrollToTop";
 import {
   userIsAuthenticated,
   userIsNotAuthenticated,
@@ -53,6 +52,7 @@ const App = ({ persistor, onBeforeLift }) => {
   return (
     <Fragment>
       <Router history={history}>
+        <ScrollToTop />
         <div className="main-container">
           <ConfirmModal />
 

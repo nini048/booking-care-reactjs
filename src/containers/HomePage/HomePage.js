@@ -31,18 +31,24 @@ const HomePage = () => {
       <HomeHeader
         isShowBanner={true}
       />
-      <Specialty
-        settings={settings}
-      />
-      <MedicalFacility settings={settings}
-      />
-      <OutstandingDoctor
-        settings={settings}
-      />
-      <HandBook
-        settings={settings}
-      />
-      <About />
+      <div id="specialty">
+        <Specialty settings={settings} />
+      </div>
+      <div id="medical-facility">
+        <MedicalFacility settings={settings} />
+      </div>
+
+      <div id="doctor">
+        <OutstandingDoctor settings={settings} />
+      </div>
+
+      <div id="handbook">
+        <HandBook settings={settings} />
+      </div>
+
+      <div id="about">
+        <About />
+      </div>
       <HomeFooter />
       <div style={{ heigth: '300px' }}></div>
     </div>

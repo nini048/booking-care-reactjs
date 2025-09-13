@@ -1,7 +1,5 @@
-import React from 'react';
 import medicalFacilityImg from '../../../assets/medicalFacility/benh-vien-an-viet.JPG'
-import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import Slider from "react-slick";
 
 const MedicalFacility = (props) => {
@@ -11,8 +9,12 @@ const MedicalFacility = (props) => {
     <div className=' section-share section-medical-facility'>
       <div className='section-container'>
         <div className='section-header'>
-          <span className='title-section'>Cơ sở y tế nổi bật</span>
-          <button className=' btn-section btn btn-light'>Tìm kiếm</button>
+          <span className='title-section'>
+            <FormattedMessage id='section.medical-facility' />
+          </span>
+          <button className=' btn-section btn btn-light'>
+            <FormattedMessage id='common.search' />
+          </button>
         </div>
         <div className='section-body'>
           <Slider {...settings}>

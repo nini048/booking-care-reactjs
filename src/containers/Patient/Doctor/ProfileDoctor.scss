@@ -1,0 +1,59 @@
+.profile-doctor {
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+  margin-bottom: 1.2rem;
+
+  .doctor-avatar {
+    width: 100px;
+    height: 100px;
+    min-width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    border: 1px solid #ccc;
+  }
+
+  .doctor-info {
+    .doctor-name {
+      font-size: 1.1rem;
+      margin: 0 0 0.2rem; // cách nhẹ với desc
+      color: #222;
+      font-weight: 600;
+    }
+
+    .doctor-desc {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 0.1rem; // giảm xuống để location sát hơn
+
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .doctor-location {
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 0.15rem; // chỉ cách nhẹ với giá
+
+      span {
+        font-weight: 600;
+        color: #222;
+      }
+    }
+
+    .doctor-price {
+      font-size: 0.9rem;
+      color: #333;
+
+      span {
+        font-weight: 600;
+        color: #222;
+      }
+    }
+  }
+}

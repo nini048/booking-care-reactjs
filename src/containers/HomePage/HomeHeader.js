@@ -30,11 +30,16 @@ const HomeHeader = (props) => {
       language
     })
   }
-  console.log(language)
   const handleReturnHome = () => {
     history.push('/home')
   }
 
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
   return (
     <React.Fragment>
       <div className='home-header-container'>
@@ -48,7 +53,9 @@ const HomeHeader = (props) => {
             </div>
           </div>
           <div className='center-content'>
-            <div className="child-content">
+            <div className="child-content"
+              onClick={() => scrollToSection('specialty')}
+            >
               <div className='subs-title'>
                 <b><FormattedMessage id='home-header.specialty' /></b>
               </div>
@@ -56,7 +63,9 @@ const HomeHeader = (props) => {
 
             </div>
 
-            <div className="child-content">
+            <div className="child-content"
+              onClick={() => scrollToSection('medical-facility')}
+            >
               <div className='subs-title'><b>
                 <FormattedMessage id='home-header.health-facility' />
               </b></div>
@@ -65,7 +74,9 @@ const HomeHeader = (props) => {
               </div>
             </div>
 
-            <div className="child-content">
+            <div className="child-content"
+              onClick={() => scrollToSection('doctor')}
+            >
               <div className='subs-title'><b>
                 <FormattedMessage id='home-header.doctor' />
 
@@ -76,7 +87,9 @@ const HomeHeader = (props) => {
               </div>
             </div>
 
-            <div className="child-content">
+            <div className="child-content"
+              onClick={() => scrollToSection('handbook')}
+            >
               <div className='subs-title'><b>
                 <FormattedMessage id='home-header.fee' />
               </b></div>

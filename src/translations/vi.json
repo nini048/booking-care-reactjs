@@ -27,7 +27,14 @@
     "dental": "Khám nha khoa"
   },
   "section": {
-    "outstanding-doctor": "Bác sĩ nổi bật"
+    "outstanding-doctor": "Bác sĩ nổi bật",
+    "specialty": "Chuyên khoa phổ biến",
+    "medical-facility": "Cơ sở y tế nổi bật",
+    "handbook": "Cẩm nang",
+    "about": "Thông tin thêm"
+  },
+  "about": {
+    "description": "Đây là hệ thống chăm sóc sức khỏe trực tuyến, cung cấp thông tin hữu ích về y tế và hỗ trợ người dùng trong việc tiếp cận dịch vụ y tế nhanh chóng và tiện lợi.\n\nNgười dùng có thể dễ dàng tra cứu thông tin về bác sĩ, chuyên khoa, cũng như đặt lịch khám trực tuyến chỉ với vài thao tác đơn giản.\n\nVới mục tiêu nâng cao chất lượng dịch vụ y tế, nền tảng không chỉ giúp tiết kiệm thời gian mà còn mang đến trải nghiệm thân thiện và hiện đại."
   },
   "manage-doctor": {
     "title": "Thêm thông tin bác sĩ",
@@ -78,7 +85,8 @@
     "forbiden-request": "Thông tin truyền vào không hợp lệ",
     "fail-to-load-all-code": "Không thể tải về dữ liệu allcode",
     "sum": "Tổng",
-    "date-range-invalid": "Khoảng thời gian không hợp lệ"
+    "date-range-invalid": "Khoảng thời gian không hợp lệ",
+    "view-more": "Xem thêm"
   },
   "menu": {
     "system": {
