@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useSelector } from "react-redux";
+import ConfirmBooking from '../routes/ConfirmBooking'
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter as Router } from "connected-react-router";
 import { history } from "../redux";
@@ -74,6 +75,7 @@ const App = ({ persistor, onBeforeLift }) => {
                 />
                 <Route path={path.HOMEPAGE} component={HomePage} />
                 <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                <Route path="/confirm-booking" component={ConfirmBooking} />
               </Switch>
 
             </CustomScrollbars>

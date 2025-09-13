@@ -9,7 +9,7 @@ import { FormattedMessage } from "react-intl";
 const BookingModal = (props) => {
   const dispatch = useDispatch()
   const language = useSelector(state => state.app.language)
-  const { show, onClose, doctor, slot, date, setIsBookingSuccess } = props
+  const { show, onClose, doctor, slot, date } = props
   const genders = useSelector(state => state.admin.genders)
   const [formData, setFormData] = useState({
     fullName: "",
@@ -29,29 +29,29 @@ const BookingModal = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const res = await dispatch(postBookingAppointment({
       ...formData,
       doctorId: doctor.id,
       timeType: slot?.value,
-      date: date
+      date: date,
+      doctorName: `${doctor.lastName} ${doctor.firstName}`
     }));
 
     if (res && res.errorCode === 0) {
 
-      const res1 = await dispatch(postScheduleDoctor({
-        doctorId: doctor.id,
-        date: date,
-        time: [slot.value]
-      }));
-      setIsBookingSuccess(true)
-
-      toast.success(translateMessage("Booking successful! / Đặt lịch khám thành công!", language));
+      toast.success(
+        translateMessage(
+          "Please check your email to confirm booking / Vui lòng kiểm tra email để xác nhận đặt lịch",
+          language
+        )
+      );
+      onClose();
     } else {
-      toast.error(translateMessage("Booking failed! / Đặt lịch thất bại!", language));
+      toast.error(
+        translateMessage("Booking failed! / Đặt lịch thất bại!", language)
+      );
     }
-
-    onClose(); // đóng modal sau khi thông báo
-
   };
   if (!show) return null;
 
