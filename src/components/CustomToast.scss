@@ -1,73 +1,80 @@
-@import "../styles/common.scss";
+.custom-toast {
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  max-width: 350px;
+  font-size: 14px;
+  line-height: 1.4;
+  overflow: hidden;
 
-.toast-container {
-  .toast-item {
-    white-space: pre-wrap;
-    box-shadow: 0 0 5px 5px $box-shadow-color;
-    -webkit-box-shadow: 0 0 5px 5px $box-shadow-color;
+  &.success {
+    background-color: #28a745;
+  }
 
-    &.Toastify__toast--success {
-      background: $common-green;
+  &.error {
+    background-color: #dc3545;
+  }
+
+  &.warn {
+    background-color: #ffc107;
+    color: #333;
+  }
+
+  &.info {
+    background-color: #17a2b8;
+  }
+
+  .toast-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+
+    .toast-time {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-right: 8px;
     }
 
-    &.Toastify__toast--error {
-      background: $common-red;
+    .toast-icon {
+      margin-right: 6px;
+      font-size: 16px;
     }
 
-    &.Toastify__toast--warn {
-      background: $colormain;
+    .toast-title {
+      font-weight: 600;
+      font-size: 14px;
     }
+  }
 
-    &.Toastify__toast--info {
-      background: $colormain;
-    }
+  .toast-body {
+    .toast-content {
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 4px;
 
-    .toast-close {
-      position: absolute;
-      right: 10px;
-      top:10px;
-      color: $common-text-color;
-      font-size: $base-size;
-      padding: 0;
-      cursor: pointer;
-      background: transparent;
-      border: 0;
-      -webkit-appearance: none;
-      transition: opacity 0.2s ease-out;
-    }
-
-    .toast-item-body {
-      color: $common-text-color;
-      display: block;
-      flex: none;
-      width: 100%;
-
-      .toast-title {
-        font-weight: bold;
-        font-size: $base-size;
-        margin: 0 20px 5px 0;
-
-        .fixed-scroll-bar {
-          height: 50px;
-        }
-        .date {
-          float: right;
-          font-size: $base-size - 2px;
-          vertical-align: middle;
-          margin-right: 5px;
-          margin-bottom: 0;
-          padding: 2px 5px;
-        }
-
-        i {
-          position: relative;
-          margin-right: 3px;
-        }
-      }
-
-      .toast-content {
-        font-size: $base-size - 2px;
+      &:last-child {
+        margin-bottom: 0;
       }
     }
+  }
+}
+
+.toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #fff;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.7;
   }
 }

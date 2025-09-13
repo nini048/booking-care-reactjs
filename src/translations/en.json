@@ -119,6 +119,28 @@
   "about": {
     "description": "This is an online healthcare system that provides useful medical information and helps users access healthcare services quickly and conveniently.\n\nUsers can easily look up information about doctors, specialties, and book appointments online with just a few simple steps.\n\nWith the goal of improving healthcare quality, the platform not only saves time but also delivers a friendly and modern experience."
   },
+  "booking": {
+    "modalTitle": "Book Appointment",
+    "slotTime": "Time",
+    "fullName": "Full Name",
+    "email": "Email",
+    "gender": "Gender",
+    "birthday": "Birthday",
+    "address": "Address",
+    "phoneNumber": "Phone Number",
+    "reason": "Reason for Appointment",
+    "forWhom": "Booking for",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "genderOther": "Other",
+    "genderSelect": "Select Gender",
+    "forWhomSelf": "Self",
+    "forWhomRelative": "Relative",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "toastSuccess": "Booking successful!",
+    "toastFail": "Booking failed!"
+  },
   "manage-user": {
     "add": "Add new user",
     "email": "Email",

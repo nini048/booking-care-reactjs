@@ -1,48 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./BookingModal.scss";
 import ProfileDoctor from '../ProfileDoctor'
-
+import { useDispatch, useSelector } from "react-redux";
+import { postBookingAppointment, postScheduleDoctor } from "../../../../store/actions";
+import { toast } from "react-toastify";
+import { translateMessage } from "../../../../utils/translateMessage";
+import { FormattedMessage } from "react-intl";
 const BookingModal = (props) => {
-  const { show, onClose, doctor, slot, date } = props
+  const dispatch = useDispatch()
+  const language = useSelector(state => state.app.language)
+  const { show, onClose, doctor, slot, date, setIsBookingSuccess } = props
+  const genders = useSelector(state => state.admin.genders)
   const [formData, setFormData] = useState({
     fullName: "",
-    phone: "",
+    phoneNumber: "",
     email: "",
     address: "",
     reason: "",
     forWhom: "self",
+    gender: "",
+    birthday: ""
   });
   console.log('slot', slot)
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Booking data:", formData);
-    onClose();
-  };
+    const res = await dispatch(postBookingAppointment({
+      ...formData,
+      doctorId: doctor.id,
+      timeType: slot?.value,
+      date: date
+    }));
 
-  // Nếu không show thì return null luôn
+    if (res && res.errorCode === 0) {
+
+      const res1 = await dispatch(postScheduleDoctor({
+        doctorId: doctor.id,
+        date: date,
+        time: [slot.value]
+      }));
+      setIsBookingSuccess(true)
+
+      toast.success(translateMessage("Booking successful! / Đặt lịch khám thành công!", language));
+    } else {
+      toast.error(translateMessage("Booking failed! / Đặt lịch thất bại!", language));
+    }
+
+    onClose(); // đóng modal sau khi thông báo
+
+  };
   if (!show) return null;
 
   return (
     <div className="booking-modal-overlay">
       <div className="booking-modal">
-        {/* Header bác sĩ */}
-        <h2>Đặt lịch khám</h2>
+        <h2><FormattedMessage id="booking.modalTitle" /></h2>
 
         <ProfileDoctor doctor={doctor} />
         {/* Form đặt lịch */}
         <p className="slot-time">
-          Thời gian: <strong>{date} {slot.label}</strong>
+          <FormattedMessage id="booking.slotTime" />
+          <strong> {date} {slot.label}</strong>
         </p>
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">
-              <label>Họ tên</label>
+              <label><FormattedMessage id="booking.fullName" /></label>
               <input
                 type="text"
                 name="fullName"
@@ -51,21 +78,9 @@ const BookingModal = (props) => {
                 required
               />
             </div>
-            <div className="form-group">
-              <label>Số điện thoại</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
 
-          <div className="form-row">
             <div className="form-group">
-              <label>Email</label>
+              <label><FormattedMessage id="booking.email" /></label>
               <input
                 type="email"
                 name="email"
@@ -74,8 +89,36 @@ const BookingModal = (props) => {
                 required
               />
             </div>
+          </div>
+
+          <div className="form-row">
             <div className="form-group">
-              <label>Địa chỉ</label>
+              <label><FormattedMessage id='booking.gender' /></label>
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                required
+              >
+                <option value="male">{translateMessage('Male / Nam', language)}</option>
+                <option value="female">{translateMessage('Female / Nữ', language)}</option>
+                <option value="other">{translateMessage('Other / Khác', language)}</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label><FormattedMessage id="booking.birthday" /></label>
+              <input
+                type="date"
+                name="birthday"
+                value={formData.birthday}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label><FormattedMessage id="booking.address" /></label>
               <input
                 type="text"
                 name="address"
@@ -83,10 +126,21 @@ const BookingModal = (props) => {
                 onChange={handleChange}
               />
             </div>
+            <div className="form-group">
+              <label><FormattedMessage id="booking.phoneNumber" /></label>
+              <input
+                type="text"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
           </div>
 
           <div className="form-group">
-            <label>Lý do khám</label>
+            <label><FormattedMessage id="booking.reason" /></label>
             <textarea
               name="reason"
               value={formData.reason}
@@ -96,23 +150,23 @@ const BookingModal = (props) => {
           </div>
 
           <div className="form-group">
-            <label>Đặt cho</label>
+            <label><FormattedMessage id="booking.forWhom" /></label>
             <select
               name="forWhom"
               value={formData.forWhom}
               onChange={handleChange}
             >
-              <option value="self">Bản thân</option>
-              <option value="relative">Người thân</option>
+              <option value="self">{translateMessage('Self / Bản thân', language)}</option>
+              <option value="relative">{translateMessage('Relative / Người thân ', language)}</option>
             </select>
           </div>
 
           <div className="form-actions">
             <button type="submit" className="btn-submit">
-              Xác nhận
+              <FormattedMessage id="booking.confirm" />
             </button>
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              <FormattedMessage id="booking.cancel" />
             </button>
           </div>
         </form>

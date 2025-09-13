@@ -13,7 +13,6 @@ const ManageSchedule = () => {
   const times = useSelector((state) => state.admin.times || []);
   const dispatch = useDispatch();
   const language = useSelector(state => state.app.language)
-  const maxNumber = 5
   const today = new Date().toISOString().split("T")[0];
 
   const isLoading = useSelector((state) => state.admin.isLoading);
@@ -42,8 +41,6 @@ const ManageSchedule = () => {
       doctorId: values.doctorId,
       date: values.date,
       time: values.time,
-      maxNumber: maxNumber,
-      currentNumber: values.time.length,
     };
 
     const res = await dispatch(postScheduleDoctor(formattedData));
@@ -82,7 +79,7 @@ const ManageSchedule = () => {
       ) : (
         <Formik
           enableReinitialize
-          initialValues={{ doctorId: "", date: today, time: [] }}
+          initialValues={{ doctorId: "", date: "", time: [] }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >

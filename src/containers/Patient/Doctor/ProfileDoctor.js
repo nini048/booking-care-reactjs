@@ -1,7 +1,7 @@
 
 import React from "react";
 import "./ProfileDoctor.scss";
-
+import { FormattedMessage } from "react-intl";
 const ProfileDoctor = ({ doctor }) => {
   if (!doctor) return null;
 
@@ -18,14 +18,16 @@ const ProfileDoctor = ({ doctor }) => {
         <h3 className="doctor-name">{doctor.lastName} {doctor.firstName}</h3>
         <p className="doctor-desc">{doctor.markdownData.description}</p>
         <p className="doctor-price">
-          Giá khám: <span>{doctor?.doctorInfo?.priceData?.valueVi || "Liên hệ"}</span>
+          <FormattedMessage id='manage-doctor.price' />
+          <span> {doctor?.doctorInfo?.priceData?.valueVi || "Liên hệ"}</span>
         </p>
         <p className="doctor-location">
-          Thành phố: <span>{doctor?.doctorInfo?.provinceData?.valueVi || "Liên hệ"}</span>
+          <FormattedMessage id='manage-doctor.city' />
+          <span> {doctor?.doctorInfo?.provinceData?.valueVi || "Liên hệ"}</span>
         </p>
 
       </div>
-    </div>
+    </div >
   );
 };
 

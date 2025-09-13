@@ -17,7 +17,7 @@ import Login from "./Auth/Login.js";
 import Header from "./Header/Header";
 import System from "../routes/System";
 
-import { CustomToastCloseButton } from "../components/CustomToast";
+
 import ConfirmModal from "../components/ConfirmModal";
 import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from '../components/CustomScrollbars.js'
@@ -80,16 +80,13 @@ const App = ({ persistor, onBeforeLift }) => {
           </div>
 
           <ToastContainer
-            className="toast-container"
-            toastClassName="toast-item"
-            bodyClassName="toast-item-body"
-            autoClose={false}
-            hideProgressBar={true}
-            pauseOnHover={false}
-            pauseOnFocusLoss={true}
-            closeOnClick={false}
+            position="bottom-right"
+            newestOnTop={true}
+            autoClose={3000} // tự tắt 3s
+            hideProgressBar
+            closeOnClick
+            pauseOnHover
             draggable={false}
-            closeButton={<CustomToastCloseButton />}
           />
         </div>
       </Router>

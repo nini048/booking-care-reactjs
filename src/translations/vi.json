@@ -66,6 +66,28 @@
     "price": "Giá khám",
     "payment": "Thanh toán"
   },
+  "booking": {
+    "modalTitle": "Đặt lịch khám",
+    "slotTime": "Thời gian",
+    "fullName": "Họ tên",
+    "email": "Email",
+    "gender": "Giới tính",
+    "birthday": "Ngày sinh",
+    "address": "Địa chỉ",
+    "phoneNumber": "Số điện thoại",
+    "reason": "Lý do khám",
+    "forWhom": "Đặt cho",
+    "genderMale": "Nam",
+    "genderFemale": "Nữ",
+    "genderOther": "Khác",
+    "genderSelect": "Chọn giới tính",
+    "forWhomSelf": "Bản thân",
+    "forWhomRelative": "Người thân",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+    "toastSuccess": "Đặt lịch khám thành công!",
+    "toastFail": "Đặt lịch thất bại!"
+  },
   "common": {
     "search": "Tìm kiếm",
     "add": "Thêm",

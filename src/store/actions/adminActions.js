@@ -9,7 +9,8 @@ import {
   postInfoDoctor,
   getDetailInfoDoctor,
   postScheduleDoc,
-  getDoctorSchedule
+  getDoctorSchedule,
+  postBooking
 } from '../../services/userService';
 import { dispatch } from '../../redux';
 export const fetchAllCodeStart = (inputType) => {
@@ -274,6 +275,36 @@ export const postScheduleDoctor = (data) => {
     }
   }
 }
+export const postBookingAppointment = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: actionTypes.POST_BOOKING_START
+
+      })
+      let res = await postBooking(data)
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.POST_BOOKING_SUCCESS
+        })
+      }
+      else {
+        dispatch({ type: actionTypes.POST_BOOKING_FAILED })
+      }
+      return res
+    }
+
+    catch (e) {
+
+      dispatch({ type: actionTypes.POST_BOOKING_FAILED })
+      return {
+        errorCode: 1,
+        message: 'Post booking failed'
+      };
+    }
+  }
+}
+
 
 export const fetchInfoDetailDoctor = (id) => {
   return async (dispatch) => {

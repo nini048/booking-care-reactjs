@@ -43,3 +43,6 @@ export const postScheduleDoc = (data) => {
 export const getDoctorSchedule = (doctorId, date) => {
   return axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`)
 }
+export const postBooking = (data) => {
+  return axios.post('/api/book-appointment', data)
+}

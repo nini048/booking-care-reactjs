@@ -9,7 +9,7 @@ const DoctorSchedule = (props) => {
   const dispatch = useDispatch();
   const { doctorId } = props
   const isLoading = useSelector((state) => state.admin.isLoading);
-
+  const [isBookingSucces, setIsBookingSuccess] = useState(false)
   const today = new Date();
   const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
   const [selectedDate, setSelectedDate] = useState(todayStr);
@@ -31,14 +31,13 @@ const DoctorSchedule = (props) => {
     return { label: `${day}/${month}/${year}`, value: `${year}-${month}-${day}` };
   });
 
-  // Fetch times và lịch bác sĩ khi doctorId hoặc selectedDate thay đổi
   useEffect(() => {
     dispatch(fetchAllCodeStart("TIME"));
     if (doctorId && selectedDate) {
       dispatch(fetchScheduleDoctor(doctorId, selectedDate));
       setSelectedTimes([]); // reset khi đổi ngày
     }
-  }, [dispatch, doctorId, selectedDate]);
+  }, [dispatch, doctorId, selectedDate, isBookingSucces]);
 
   // Tạo map {T1: true/false} để biết bận/rảnh
   const availabilityMap = times.reduce((acc, t) => {
@@ -54,6 +53,7 @@ const DoctorSchedule = (props) => {
       label: slotLabel
     });
     setShowModal(true);
+    setIsBookingSuccess(false)
   };
 
   console.log('times', times)
@@ -73,6 +73,7 @@ const DoctorSchedule = (props) => {
             {next7Days.map(d => (
               <li
                 key={d.value}
+                className={selectedDate === d.value ? "selected-date" : ""}
                 onClick={() => {
                   setSelectedDate(d.value);
                   setShowDropdown(false);
@@ -118,6 +119,7 @@ const DoctorSchedule = (props) => {
         doctor={doctor}
         slot={selectedSlot}
         date={selectedDate}
+        setIsBookingSuccess={setIsBookingSuccess}
       />
     </div>
   );
