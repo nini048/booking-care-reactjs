@@ -37,6 +37,7 @@
     "price": "Price",
     "payment": "Payment",
     "city": "City",
+    "address": "Address",
     "address-clinic": "Clinic Address",
     "name-clinic": "Clinic Name",
     "note": "Note"

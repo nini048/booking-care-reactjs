@@ -11,6 +11,7 @@ const BookingModal = (props) => {
   const language = useSelector(state => state.app.language)
   const { show, onClose, doctor, slot, date } = props
   const genders = useSelector(state => state.admin.genders)
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -29,7 +30,7 @@ const BookingModal = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const res = await dispatch(postBookingAppointment({
       ...formData,
       doctorId: doctor.id,
@@ -37,7 +38,7 @@ const BookingModal = (props) => {
       date: date,
       doctorName: `${doctor.lastName} ${doctor.firstName}`
     }));
-
+    setIsLoading(false);
     if (res && res.errorCode === 0) {
 
       toast.success(
@@ -58,6 +59,11 @@ const BookingModal = (props) => {
   return (
     <div className="booking-modal-overlay">
       <div className="booking-modal">
+        {isLoading && (
+          <div className="loading-overlay">
+            <div className="spinner"></div>
+          </div>
+        )}
         <h2><FormattedMessage id="booking.modalTitle" /></h2>
 
         <ProfileDoctor doctor={doctor} />

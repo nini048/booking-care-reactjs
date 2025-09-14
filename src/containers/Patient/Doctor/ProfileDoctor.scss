@@ -2,53 +2,74 @@
   display: flex;
   align-items: flex-start;
   border-bottom: 1px solid #eee;
-  padding-bottom: 1rem;
-  margin-bottom: 1.2rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  gap: 2rem; // khoảng cách giữa avatar và thông tin
 
   .doctor-avatar {
-    width: 100px;
-    height: 100px;
-    min-width: 100px;
+    width: 120px; // avatar to hơn
+    height: 120px;
+    min-width: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 1rem;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc; // đường viền nhẹ nổi bật
   }
 
   .doctor-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     .doctor-name {
-      font-size: 1.1rem;
-      margin: 0 0 0.2rem; // cách nhẹ với desc
+      font-size: 1.3rem; // tên lớn hơn
+      margin: 0 0 0.4rem;
       color: #222;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .doctor-desc {
-      font-size: 0.9rem;
-      color: #555;
-      margin-bottom: 0.1rem; // giảm xuống để location sát hơn
+    // .doctor-desc {
+    //   font-size: 1rem;
+    //   color: #555;
+    //   margin-bottom: 0.6rem;
+    //   line-height: 1.4rem;
+    //
+    //   font-weight: 600;
+    //   display: -webkit-box;
+    //   -webkit-line-clamp: 3; // show tối đa 3 dòng
+    //   -webkit-box-orient: vertical;
+    //   overflow: hidden;
+    //   text-overflow: ellipsis;
+    // }
 
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .doctor-detail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem; // khoảng cách giữa các mục
 
-    .doctor-location {
-      font-size: 0.9rem;
-      color: #333;
-      margin-bottom: 0.15rem; // chỉ cách nhẹ với giá
+      p {
+        font-size: 0.95rem;
+        color: #333;
+        margin: 0;
 
-      span {
-        font-weight: 600;
-        color: #222;
+        span {
+          font-weight: 600;
+          color: #222;
+        }
       }
     }
 
-    .doctor-price {
-      font-size: 0.9rem;
+    .doctor-clinic {
+      font-size: 1rem;
+      font-weight: 600;
+      // color: #0d6efd; // màu nổi bật cho tên phòng khám
+      margin-bottom: 0.3rem;
+    }
+
+    .doctor-price,
+    .doctor-location {
+      font-size: 0.95rem;
       color: #333;
+      margin-bottom: 0.2rem;
 
       span {
         font-weight: 600;

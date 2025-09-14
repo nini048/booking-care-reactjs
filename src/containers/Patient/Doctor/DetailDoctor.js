@@ -36,8 +36,8 @@ const DetailDoctor = () => {
     : `${inforDoctor.positionData?.valueEn || ''} ${inforDoctor.firstName} ${inforDoctor.lastName}`;
 
   const price = language === 'vi'
-    ? `${inforDoctor.doctorInfo?.priceData?.valueVi || ''}`
-    : `${inforDoctor.doctorInfo?.priceData?.valueEn || ''}`;
+    ? `${inforDoctor.doctorInfo?.priceData?.valueVi} VND`
+    : `${inforDoctor.doctorInfo?.priceData?.valueEn} USD`;
 
   const payment = language === 'vi'
     ? `${inforDoctor.doctorInfo?.paymentData?.valueVi || ''}`
