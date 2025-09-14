@@ -15,7 +15,7 @@ const initialState = {
   doctors: [],
   infoDoctor: {},
   scheduleDoctor: [],
-  specialties: []
+  specialties: [],
 }
 
 const adminReducer = (state = initialState, action) => {

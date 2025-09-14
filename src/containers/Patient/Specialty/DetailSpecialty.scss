@@ -1,21 +1,112 @@
-// .specialty-image {
-//   max-height: 300px;
-//   object-fit: cover;
-//   width: 100%;
-// }
-//
-// .doctor-list {
-//   display: flex;
-//   flex-direction: column;
-// }
-//
-// .doctor-item {
-//   display: flex;
-//   flex-direction: row;
-// }
-//
-// .doctor-avatar {
-//   max-width: 100px;
-//   max-height: 100px;
-//   object-fit: cover;
-// }
+.specialty-page {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #333;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+
+  .specialty-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h1 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .specialty-image {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 1rem;
+    }
+  }
+
+  .specialty-description {
+    margin-bottom: 3rem;
+    line-height: 1.6;
+    color: #444;
+
+    .markdown-body {
+      p {
+        margin-bottom: 1rem;
+      }
+
+      h2,
+      h3,
+      h4 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      ul,
+      ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .specialty-doctors {
+    h2 {
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .doctor-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .doctor-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+        .col-md-2 {
+          text-align: center;
+
+          .doctor-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #ccc;
+          }
+        }
+
+        .col-md-7 {
+          padding-left: 1rem;
+
+          .card-body {
+            .card-title {
+              font-weight: 600;
+              margin-bottom: 0.5rem;
+            }
+
+            .card-text {
+              color: #666;
+              font-size: 0.9rem;
+            }
+          }
+        }
+
+        .col-md-3 {
+          text-align: center;
+
+          .btn {
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
+  }
+}

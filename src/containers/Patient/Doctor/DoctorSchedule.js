@@ -1,7 +1,7 @@
 // DoctorSchedule.js
 import React, { useEffect, useState } from "react";
 import "./DoctorSchedule.scss";
-import { fetchAllCodeStart, fetchScheduleDoctor } from '../../../store/actions';
+import { fetchAllCodeStart, fetchInfoDetailDoctor, fetchScheduleDoctor } from '../../../store/actions';
 import { useDispatch, useSelector } from "react-redux";
 import BookingModal from "./Modal/BookingModal";
 import { ThreeDots } from "react-loader-spinner";
@@ -16,11 +16,13 @@ const DoctorSchedule = (props) => {
   const [selectedTimes, setSelectedTimes] = useState([]);
 
   const times = useSelector((state) => state.admin.times || []);
-  const scheduleDoctor = useSelector(state => state.admin.scheduleDoctor?.data || []);
+  const scheduleDoctor = useSelector(
+    state => state.admin.scheduleDoctorById?.[doctorId] || []
+  );
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const doctor = useSelector(state => state.admin.infoDoctor || {});
-  // Tạo 7 ngày tiếp theo
+
   const next7Days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date();
     date.setDate(today.getDate() + i);
@@ -34,14 +36,12 @@ const DoctorSchedule = (props) => {
     dispatch(fetchAllCodeStart("TIME"));
     if (doctorId && selectedDate) {
       dispatch(fetchScheduleDoctor(doctorId, selectedDate));
-      setSelectedTimes([]); // reset khi đổi ngày
+      setSelectedTimes([]);
     }
   }, [dispatch, doctorId, selectedDate]);
 
-  // Tạo map {T1: true/false} để biết bận/rảnh
   const availabilityMap = times.reduce((acc, t) => {
     acc[t.keyMap] = scheduleDoctor.some(s => s.timeType === t.keyMap);
-    // console.log('acc', acc)
     return acc;
   }, {});
 
@@ -51,13 +51,12 @@ const DoctorSchedule = (props) => {
       value: slotKey,
       label: slotLabel
     });
+    dispatch(fetchInfoDetailDoctor(doctorId))
     setShowModal(true);
   };
-
-  console.log('times', times)
+  console.log('scheduleDoctor', scheduleDoctor)
   return (
     <div className="doctor-schedule">
-      {/* Chọn ngày */}
       <div className="date-picker-wrapper">
         <div
           className="date-display"
@@ -84,7 +83,6 @@ const DoctorSchedule = (props) => {
         )}
       </div>
 
-      {/* Time slots */}
       {isLoading ? (
         <div className="loading-wrapper text-center my-5">
           <ThreeDots height="30" width="40" radius="9" color="#0d6efd" visible={true} />
