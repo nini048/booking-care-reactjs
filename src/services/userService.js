@@ -56,3 +56,6 @@ export const postNewSpecialty = (data) => {
 export const getAllSpecialty = () => {
   return axios.get('/api/get-all-specialty')
 }
+export const getDoctorsBySpecialty = (specialtyId) => {
+  return axios.get(`/api/get-doctors-by-specialty?id=${specialtyId}`)
+}

@@ -1,71 +1,69 @@
-import React from "react";
-import './DeatailSpecialty.scss'
-const DetailSpecialty = () => {
-  // Hardcode dữ liệu
-  const specialty = {
-    id: 1,
-    name: "Cardiology / Tim mạch",
-    image: "https://via.placeholder.com/1200x300?text=Cardiology",
-    description: `
-## Giới thiệu chuyên khoa Tim mạch
-Chuyên khoa Tim mạch tập trung vào chẩn đoán, điều trị và phòng ngừa các bệnh liên quan đến tim và hệ tuần hoàn.  
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from 'react-router-dom';
+import { getDoctorsBySpecialty } from "../../../services/userService";
 
-- Điều trị tăng huyết áp, bệnh mạch vành.  
-- Siêu âm tim, đo điện tim, can thiệp tim mạch.  
-- Theo dõi sau phẫu thuật tim.  
-    `,
-    doctors: [
-      {
-        id: 1,
-        name: "Dr. Nguyễn Văn A",
-        position: "Phó Giáo sư, Bác sĩ Tim mạch",
-        image: "https://via.placeholder.com/150x150?text=Doctor+A",
-      },
-      {
-        id: 2,
-        name: "Dr. John Smith",
-        position: "Cardiologist",
-        image: "https://via.placeholder.com/150x150?text=Doctor+B",
-      },
-    ],
-  };
+import DoctorSchedule from '../Doctor/DoctorSchedule'
+import './DetailSpecialty.scss'
+
+const DetailSpecialty = () => {
+  const dispatch = useDispatch();
+  const [specialty, setSpecialty] = useState({});
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchSpecialty = async () => {
+      const res = await getDoctorsBySpecialty(id);
+      if (res && res.data) setSpecialty(res.data);
+    };
+    fetchSpecialty();
+  }, [dispatch, id]);
 
   return (
     <div className="specialty-page container py-4">
-      {/* Tiêu đề + ảnh */}
+
       <div className="specialty-header text-center mb-5">
         <h1 className="fw-bold">{specialty.name}</h1>
         <img
-          src={specialty.image}
+          src={specialty.image ? `http://localhost:8080/uploads/${specialty.image}` : "/default-avatar.png"}
           alt={specialty.name}
-          className="img-fluid rounded shadow-sm mt-3"
+          className="img-fluid rounded shadow-sm mt-3 specialty-image"
         />
       </div>
 
-      {/* Mô tả Markdown */}
       <div className="specialty-description mb-5">
         <div
           className="markdown-body"
-          dangerouslySetInnerHTML={{ __html: specialty.description }}
+          dangerouslySetInnerHTML={{ __html: specialty.contentHTML }}
         />
       </div>
 
-      {/* Danh sách bác sĩ */}
       <div className="specialty-doctors">
         <h2 className="fw-semibold mb-4">Bác sĩ trong khoa</h2>
-        <div className="row g-4">
-          {specialty.doctors.map((doc) => (
-            <div className="col-md-4" key={doc.id}>
-              <div className="doctor-card card h-100 shadow-sm">
-                <img
-                  src={doc.image}
-                  alt={doc.name}
-                  className="card-img-top"
-                />
-                <div className="card-body text-center">
-                  <h5 className="card-title fw-bold">{doc.name}</h5>
-                  <p className="card-text text-muted">{doc.position}</p>
-                  <button className="btn btn-outline-primary btn-sm">
+        <div className="doctor-list">
+          {specialty.specialtyData?.map((doc) => (
+            <div className="doctor-item card mb-3 shadow-sm" key={doc.id}>
+              <div className="row g-0 align-items-center">
+                <div className="col-md-2 text-center">
+                  <img
+                    src={doc.doctorData?.image ? `http://localhost:8080/uploads/${doc.doctorData.image}` : "/default-avatar.png"}
+                    alt={doc.doctorData?.firstName}
+                    className="img-fluid rounded doctor-avatar"
+                  />
+                </div>
+                <div className="col-md-7">
+                  <div className="card-body">
+                    <h5 className="card-title fw-bold">
+                      {doc.doctorData?.lastName} {doc.doctorData?.firstName}
+                    </h5>
+                    <p className="card-text text-muted">
+                      {doc.doctorData?.positionData?.valueVi}
+                    </p>
+                  </div>
+                </div>
+                <div className="col-md-3 text-center">
+                  <DoctorSchedule doctorId={doc.id} />
+                  <button className="btn btn-outline-primary btn-sm mt-2">
                     Xem chi tiết
                   </button>
                 </div>

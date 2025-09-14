@@ -12,7 +12,8 @@ import {
   getDoctorSchedule,
   postBooking,
   postNewSpecialty,
-  getAllSpecialty
+  getAllSpecialty,
+  getDoctorsBySpecialty
 } from '../../services/userService';
 import { dispatch } from '../../redux';
 export const fetchAllCodeStart = (inputType) => {
@@ -218,6 +219,28 @@ export const fetchAllDoctors = () => {
     }
   }
 }
+export const fetchDoctorsBySpecialty = (specialtyId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionTypes.FETCH_DOCTORS_BY_SPECIALTY_START });
+      let res = await getDoctorsBySpecialty(specialtyId);
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_DOCTORS_BY_SPECIALTY_SUCCESS,
+          data: res
+        });
+
+      } else {
+        dispatch({ type: actionTypes.FETCH_DOCTORS_BY_SPECIALTY_FAILED });
+      }
+      return res;
+    } catch (e) {
+      dispatch({ type: actionTypes.FETCH_DOCTORS_BY_SPECIALTY_FAILED });
+      return { errorCode: 1, message: 'Fetch doctors by specialty error' };
+    }
+  }
+}
+
 export const fetchAllSpecialty = () => {
   return async (dispatch) => {
     try {
