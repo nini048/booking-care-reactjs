@@ -10,7 +10,9 @@ import {
   getDetailInfoDoctor,
   postScheduleDoc,
   getDoctorSchedule,
-  postBooking
+  postBooking,
+  postNewSpecialty,
+  getAllSpecialty
 } from '../../services/userService';
 import { dispatch } from '../../redux';
 export const fetchAllCodeStart = (inputType) => {
@@ -216,6 +218,28 @@ export const fetchAllDoctors = () => {
     }
   }
 }
+export const fetchAllSpecialty = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionTypes.FECTCH_ALL_SPECIALTY_START });
+      let res = await getAllSpecialty();
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.FECTCH_ALL_SPECIALTY_SUCCESS,
+          data: res
+        });
+
+      } else {
+        dispatch({ type: actionTypes.FECTCH_ALL_SPECIALTY_FAILED });
+      }
+      return res;
+    } catch (e) {
+      dispatch({ type: actionTypes.FECTCH_ALL_SPECIALTY_FAILED });
+      return { errorCode: 1, message: 'Fetch specialties error' };
+    }
+  }
+}
+
 export const postInfoDetailDoctor = (data) => {
   return async (dispatch) => {
     try {
@@ -246,6 +270,36 @@ export const postInfoDetailDoctor = (data) => {
     }
   }
 }
+export const createNewSpecialty = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: actionTypes.POST_NEW_SPECIALTY_START
+
+      })
+      let res = await postNewSpecialty(data)
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.POST_NEW_SPECIALTY_SUCCESS
+        })
+      }
+      else {
+        dispatch({ type: actionTypes.POST_NEW_SPECIALTY_FAILED })
+      }
+      return res
+    }
+
+    catch (e) {
+
+      dispatch({ type: actionTypes.POST_NEW_SPECIALTY_FAILED })
+      return {
+        errorCode: 1,
+        message: 'Post new specialty failed'
+      };
+    }
+  }
+}
+
 export const postScheduleDoctor = (data) => {
   return async (dispatch) => {
     try {

@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "react-slick";
 import specialtyImg from '../../../assets/specialty/co-xuong-khop.jpeg'
 import { FormattedMessage } from 'react-intl';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllSpecialty } from "../../../store/actions";
 
 const Specialty = (props) => {
   let { settings } = props
+  const specialties = useSelector(state => state.admin.specialties)
+  const dispatch = useDispatch()
+  const language = useSelector(state => state.app.language)
+  useEffect(() => {
+    const fetchSecialty = async () => {
+      let res = await dispatch(fetchAllSpecialty())
+      console.log('res', res)
+    }
+    fetchSecialty()
+  }, [dispatch])
+  console.log('specialty', specialties)
   return (
     <div className=' section-share section-specialty'>
       <div className='section-container'>
@@ -18,35 +31,21 @@ const Specialty = (props) => {
         </div>
         <div className='section-body'>
           <Slider {...settings}>
-            {/* <div className='specialty-body'> */}
-            {/*   <img src={specialtyImg} /> */}
-            {/*   <div>Cơ xương khớp 1</div> */}
-            {/* </div> */}
-            <div className='img-customize'>
-              <img src={specialtyImg} />
-              <div>Cơ xương khớp 2</div>
+            {specialties && specialties.length > 0
+              && specialties.map((spec, index) => {
+                const avatarUrl = spec.image
+                  ? `http://localhost:8080/uploads/${spec.image}`
+                  : specialtyImg;
+                return (
 
-            </div>
-            <div className='img-customize'>
-              <img src={specialtyImg} />
-              <div>Cơ xương khớp 3</div>
-
-            </div>
-            <div className='img-customize'>
-              <img src={specialtyImg} />
-              <div>Cơ xương khớp 4</div>
-
-            </div>
-            <div className='img-customize'>
-              <img src={specialtyImg} />
-              <div>Cơ xương khớp 5</div>
-
-            </div>
-            <div className='img-customize'>
-              <img src={specialtyImg} />
-              <div>Cơ xương khớp 6</div>
-
-            </div>
+                  <div key={index}
+                    className=' img-customize'
+                  >
+                    <img src={avatarUrl} />
+                    <div>{spec.name}</div>
+                  </div>
+                )
+              })}
 
           </Slider>
         </div>

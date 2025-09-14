@@ -46,3 +46,13 @@ export const getDoctorSchedule = (doctorId, date) => {
 export const postBooking = (data) => {
   return axios.post('/api/book-appointment', data)
 }
+export const postNewSpecialty = (data) => {
+  return axios.post('/api/post-new-specialty', data,
+    {
+      headers: { "Content-Type": "multipart/form-data" }
+    }
+  )
+}
+export const getAllSpecialty = () => {
+  return axios.get('/api/get-all-specialty')
+}

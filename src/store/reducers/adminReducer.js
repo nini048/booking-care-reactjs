@@ -14,7 +14,8 @@ const initialState = {
   topDoctors: [],
   doctors: [],
   infoDoctor: {},
-  scheduleDoctor: []
+  scheduleDoctor: [],
+  specialties: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -147,6 +148,25 @@ const adminReducer = (state = initialState, action) => {
 
 
       }
+    case actionTypes.FECTCH_ALL_SPECIALTY_START:
+      return {
+        ...state,
+
+      }
+    case actionTypes.FECTCH_ALL_SPECIALTY_SUCCESS:
+      return {
+        ...state,
+        specialties: action.data.data
+        // isLoading: false
+      }
+    case actionTypes.FECTCH_ALL_SPECIALTY_FAILED:
+      return {
+        ...state,
+        specialties: [],
+
+
+      }
+
     case actionTypes.CREATE_USER_SUCCESS:
       return {
         ...state,
