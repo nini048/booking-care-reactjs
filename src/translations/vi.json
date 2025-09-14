@@ -50,7 +50,9 @@
     "address-clinic": "Địa chỉ phòng khám",
     "address": "Địa chỉ",
     "name-clinic": "Tên phòng khám",
-    "note": "Ghi chú"
+    "note": "Ghi chú",
+    "specialty": "Chuyên khoa",
+    "clinic": "Phòng khám"
   },
   "doctor-detail": {
     "loading": "Đang tải thông tin bác sĩ...",

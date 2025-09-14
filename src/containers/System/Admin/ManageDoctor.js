@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllCodeStart,
   fetchAllDoctors,
+  fetchAllSpecialty,
   fetchInfoDetailDoctor,
   postInfoDetailDoctor,
 } from "../../../store/actions";
@@ -23,7 +24,8 @@ const ManageDoctor = () => {
   const infoDoctor = useSelector((state) => state.admin.infoDoctor);
   const provinces = useSelector(state => state.admin.provinces)
   const payments = useSelector(state => state.admin.payments)
-  const prices = useSelector(state => state.admin.prices)
+  const prices = useSelector(state => state.admin.prices);
+  const specialties = useSelector(state => state.admin.specialties)
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const isLoading = useSelector((state) => state.admin.isLoading);
 
@@ -39,6 +41,7 @@ const ManageDoctor = () => {
       await dispatch(fetchAllCodeStart('PROVINCE'))
       await dispatch(fetchAllCodeStart('PAYMENT'))
       await dispatch(fetchAllCodeStart('PRICE'))
+      await dispatch(fetchAllSpecialty())
     }
     fetchCode()
   }, [dispatch])
@@ -62,6 +65,23 @@ const ManageDoctor = () => {
     label: language === "vi" ? p.valueVi : p.valueEn,
   }));
 
+  const specialtyOptions = specialties?.map(s => ({
+    value: s.id,
+    label: s.name
+  }))
+  console.log('specialtyOptions', specialtyOptions)
+  const clinicOptions = [
+    { value: 1, label: "Phòng khám Đa khoa Quốc tế" },
+    { value: 2, label: "Bệnh viện Chợ Rẫy" },
+    { value: 3, label: "Bệnh viện Bạch Mai" },
+    { value: 4, label: "Phòng khám Nhi Đồng Thành Phố" },
+    { value: 5, label: "Phòng khám Tai Mũi Họng Trung Ương" },
+    { value: 6, label: "Bệnh viện Từ Dũ" },
+    { value: 7, label: "Bệnh viện Đại học Y Dược TP.HCM" },
+    { value: 8, label: "Phòng khám Tim mạch Hà Nội" },
+    { value: 9, label: "Phòng khám Da liễu Sài Gòn" },
+    { value: 10, label: "Bệnh viện Vinmec" },
+  ];
   const validationSchema = Yup.object().shape({
     doctorId: Yup.number().required(
       translateMessage("Please select a doctor / Vui lòng chọn bác sĩ", language)
@@ -88,6 +108,12 @@ const ManageDoctor = () => {
     priceId: Yup.string().required(
       translateMessage("Please select a price / Vui lòng chọn giá khám", language)
     ),
+    clinicId: Yup.string().required(
+      translateMessage("Please select a clinic / Vui lòng chọn phòng khám", language)
+    ),
+    specialtyId: Yup.string().required(
+      translateMessage("Please select a specialty / Vui lòng chọn chuyên khoa", language)
+    ),
     paymentId: Yup.string().required(
       translateMessage("Please select a payment method / Vui lòng chọn phương thức thanh toán", language)
     ),
@@ -111,6 +137,7 @@ const ManageDoctor = () => {
     if (selected) {
       setSelectedDoctor(selected);
       setFieldValue("doctorId", selected.value);
+      console.log('doctor select', selected)
       dispatch(fetchInfoDetailDoctor(selected.value)).then((res) => {
         const info = res?.data || {};
         // Set Markdown
@@ -133,6 +160,8 @@ const ManageDoctor = () => {
           setFieldValue("nameClinic", info.doctorInfo.nameClinic || "");
           setFieldValue("note", info.doctorInfo.note || "");
           setFieldValue("count", info.doctorInfo.count || 0);
+          setFieldValue("specialtyId", info.doctorInfo.specialtyData.id || '');
+          setFieldValue('clinicId', info.doctorInfo.clinicId || '')
         } else {
           setFieldValue("priceId", "");
           setFieldValue("paymentId", "");
@@ -141,6 +170,8 @@ const ManageDoctor = () => {
           setFieldValue("nameClinic", "");
           setFieldValue("note", "");
           setFieldValue("count", 0);
+          setFieldValue("clinicId", '');
+          setFieldValue("specialtyId", '');
         }
         setIsUpdate(!!info.markdownData);
       });
@@ -157,6 +188,9 @@ const ManageDoctor = () => {
       setFieldValue("nameClinic", "");
       setFieldValue("note", "");
       setFieldValue("count", 0);
+      setFieldValue("clinicId", '');
+      setFieldValue("specialtyId", '');
+
       setIsUpdate(false);
     }
   };
@@ -188,6 +222,8 @@ const ManageDoctor = () => {
         nameClinic: values.nameClinic,             // Tên phòng khám
         note: values.note,                         // Ghi chú
         count: values.count || 0,                  // Số lượt khám (nếu cần)
+        clinicId: values.clinicId,
+        specialtyId: values.specialtyId,
       })
     );
 
@@ -244,6 +280,8 @@ const ManageDoctor = () => {
             addressClinic: infoDoctor?.doctorInfo?.addressClinic || "",
             nameClinic: infoDoctor?.doctorInfo?.nameClinic || "",
             note: infoDoctor?.doctorInfo?.note || "",
+            clinicId: infoDoctor?.doctorInfo?.clinicId || '',
+            specialtyId: infoDoctor?.doctorInfo?.specialtyData?.id || ''
           }}
           validationSchema={validationSchema}
           onSubmit={handleSave}
@@ -276,6 +314,32 @@ const ManageDoctor = () => {
 
               {/* Select thông tin phòng khám */}
               <div className="row mt-4 g-4">
+                <div className="col-lg-6">
+                  <label className="form-label">
+                    <FormattedMessage id="manage-doctor.specialty" />
+                  </label>
+                  <Select
+                    value={specialtyOptions?.find(opt => opt.value === values.specialtyId) || null}
+                    onChange={selected => setFieldValue("specialtyId", selected?.value)}
+                    options={specialtyOptions}
+                  />
+                  <ErrorMessage name="specialtyId" component="div" className="text-danger" />
+                </div>
+
+                <div className="col-lg-6">
+                  <label className="form-label">
+                    <FormattedMessage id="manage-doctor.clinic" />
+
+                  </label>
+
+                  <Select
+                    value={clinicOptions?.find(opt => opt.value === values.clinicId) || null}
+                    onChange={selected => setFieldValue("clinicId", selected?.value)}
+                    options={clinicOptions}
+                  />
+                  <ErrorMessage name="clinicId" component="div" className="text-danger" />
+                </div>
+
                 <div className="col-lg-4">
                   <label className="form-label">
                     <FormattedMessage id="manage-doctor.price" />

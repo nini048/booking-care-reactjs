@@ -5,10 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllSpecialty } from "../../../store/actions";
 
+import { Redirect, useHistory } from 'react-router-dom';
 const Specialty = (props) => {
   let { settings } = props
   const specialties = useSelector(state => state.admin.specialties)
   const dispatch = useDispatch()
+  const history = useHistory()
   const language = useSelector(state => state.app.language)
   useEffect(() => {
     const fetchSecialty = async () => {
@@ -17,7 +19,11 @@ const Specialty = (props) => {
     }
     fetchSecialty()
   }, [dispatch])
-  console.log('specialty', specialties)
+  const handleViewDetailSpecialty = (specialty) => {
+    history.push(`/detail-specialty/${specialty.id}`)
+    console.log('doc: ', specialty)
+  }
+
   return (
     <div className=' section-share section-specialty'>
       <div className='section-container'>
@@ -40,6 +46,7 @@ const Specialty = (props) => {
 
                   <div key={index}
                     className=' img-customize'
+                    onClick={() => { handleViewDetailSpecialty(spec) }}
                   >
                     <img src={avatarUrl} />
                     <div>{spec.name}</div>

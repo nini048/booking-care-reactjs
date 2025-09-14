@@ -23,6 +23,7 @@ import ConfirmModal from "../components/ConfirmModal";
 import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from '../components/CustomScrollbars.js'
 import DetailDoctor from "./Patient/Doctor/DetailDoctor";
+import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
 import Doctor from "../routes/Doctor";
 const App = ({ persistor, onBeforeLift }) => {
   const [bootstrapped, setBootstrapped] = useState(false);
@@ -75,6 +76,7 @@ const App = ({ persistor, onBeforeLift }) => {
                 />
                 <Route path={path.HOMEPAGE} component={HomePage} />
                 <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
                 <Route path="/confirm-booking" component={ConfirmBooking} />
               </Switch>
 

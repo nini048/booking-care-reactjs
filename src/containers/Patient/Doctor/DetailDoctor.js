@@ -61,6 +61,11 @@ const DetailDoctor = () => {
               {inforDoctor.markdownData?.description ||
                 <FormattedMessage id='doctor-detail.no-description' />}
             </p>
+            <p className='doctor-description'>
+              {inforDoctor.doctorInfo.specialtyData.name ||
+                <FormattedMessage id='doctor-detail.no-description' />}
+            </p>
+
           </div>
         </div>
 
