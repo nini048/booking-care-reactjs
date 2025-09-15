@@ -120,9 +120,9 @@ const ManageDoctor = () => {
     provinceId: Yup.string().required(
       translateMessage("Please select a province / Vui lòng chọn tỉnh/thành phố", language)
     ),
-    addressClinic: Yup.string().required(
-      translateMessage("Please enter clinic address / Vui lòng nhập địa chỉ phòng khám", language)
-    ),
+    // addressClinic: Yup.string().required(
+    //   translateMessage("Please enter clinic address / Vui lòng nhập địa chỉ phòng khám", language)
+    // ),
     nameClinic: Yup.string().required(
       translateMessage("Please enter clinic name / Vui lòng nhập tên phòng khám", language)
     ),

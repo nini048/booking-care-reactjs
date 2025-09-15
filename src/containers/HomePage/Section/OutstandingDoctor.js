@@ -58,7 +58,7 @@ const OutstandingDoctor = (props) => {
                     <img src={avatarUrl} />
                     <div className='description-doctor text-center'>
                       <div className='name'>{language === 'vi' ? doc.positionData?.valueVi : doc.positionData?.valueEn} {doc.firstName} {doc.lastName}</div>
-                      <div className='position'>{language === 'vi' ? doc.positionData?.valueVi : doc.positionData?.valueEn}</div>
+                      <div className='position'>{doc?.doctorInfo?.specialtyData?.name}</div>
                     </div>
                   </div>
                 )
