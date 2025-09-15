@@ -1,0 +1,50 @@
+.clinic-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  .title {
+    color: #333;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #444;
+  }
+
+  input.form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+
+    &:focus {
+      border-color: #666;
+      box-shadow: none;
+    }
+  }
+
+  .avatar-preview {
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .btn {
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 500;
+  }
+}

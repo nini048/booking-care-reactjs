@@ -16,6 +16,7 @@ const initialState = {
   infoDoctor: {},
   scheduleDoctor: [],
   specialties: [],
+  clinics: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -163,6 +164,25 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         specialties: [],
+
+
+      }
+
+    case actionTypes.FETCH_ALL_CLINIC_START:
+      return {
+        ...state,
+
+      }
+    case actionTypes.FETCH_ALL_CLINIC_SUCCESS:
+      return {
+        ...state,
+        clinics: action.data.data
+        // isLoading: false
+      }
+    case actionTypes.FETCH_ALL_CLINIC_FAILED:
+      return {
+        ...state,
+        clinics: [],
 
 
       }

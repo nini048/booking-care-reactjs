@@ -42,9 +42,9 @@ const HomePage = () => {
         <OutstandingDoctor settings={settings} />
       </div>
 
-      <div id="handbook">
-        <HandBook settings={settings} />
-      </div>
+      {/* <div id="handbook"> */}
+      {/*   <HandBook settings={settings} /> */}
+      {/* </div> */}
 
       <div id="about">
         <About />

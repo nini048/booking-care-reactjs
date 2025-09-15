@@ -53,9 +53,21 @@ export const postNewSpecialty = (data) => {
     }
   )
 }
+
+export const postNewClinic = (data) => {
+  return axios.post('/api/post-new-clinic', data,
+    {
+      headers: { "Content-Type": "multipart/form-data" }
+    }
+  )
+}
 export const getAllSpecialty = () => {
   return axios.get('/api/get-all-specialty')
 }
+export const getAllClinic = () => {
+  return axios.get('/api/get-all-clinic')
+}
+
 export const getDoctorsBySpecialty = (specialtyId) => {
   return axios.get(`/api/get-doctors-by-specialty?id=${specialtyId}`)
 }
