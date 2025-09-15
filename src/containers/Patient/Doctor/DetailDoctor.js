@@ -58,11 +58,11 @@ const DetailDoctor = () => {
           <div className='content-right'>
             <h2 className='doctor-name'>{fullName}</h2>
             <p className='doctor-description'>
-              {inforDoctor.markdownData?.description ||
+              {translateMessage(inforDoctor.markdownData?.description, language) ||
                 <FormattedMessage id='doctor-detail.no-description' />}
             </p>
             <p className='doctor-description'>
-              {inforDoctor.doctorInfo.specialtyData.name ||
+              {translateMessage(inforDoctor.doctorInfo.specialtyData.name, language) ||
                 <FormattedMessage id='doctor-detail.no-description' />}
             </p>
 
@@ -81,14 +81,14 @@ const DetailDoctor = () => {
               <h4><FormattedMessage id="doctor-detail.clinic-info" /></h4>
               <div className="clinic-name">
                 <span><FormattedMessage id='doctor-detail.clinic-name' />:</span>
-                <span> {inforDoctor.doctorInfo?.nameClinic ||
+                <span> {translateMessage(inforDoctor.doctorInfo?.clinicData?.name, language) ||
                   translateMessage("No information / Chưa có thông tin", language)
                 }
                 </span>
               </div>
               <div className="clinic-address">
                 <span><FormattedMessage id='doctor-detail.clinic-address' />:</span>
-                <span> {inforDoctor.doctorInfo?.addressClinic ||
+                <span> {inforDoctor.doctorInfo?.clinicData?.address ||
                   translateMessage("No information / Chưa có thông tin", language)
                 }
                 </span>

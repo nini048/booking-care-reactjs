@@ -7,6 +7,7 @@ import Slider from "react-slick";
 import * as actions from '../../../store/actions'
 import { fetchAllDoctors, fetchTopDoctor } from '../../../store/actions';
 import { FormattedMessage } from 'react-intl';
+import { translateMessage } from '../../../utils/translateMessage';
 
 const OutstandingDoctor = (props) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const OutstandingDoctor = (props) => {
 
   useEffect(() => {
     const fetchTopDoc = async () => {
-      let res = await dispatch(fetchTopDoctor(10))
+      let res = await dispatch(fetchTopDoctor(30))
       console.log(res)
     }
     fetchTopDoc()
@@ -58,7 +59,7 @@ const OutstandingDoctor = (props) => {
                     <img src={avatarUrl} />
                     <div className='description-doctor text-center'>
                       <div className='name'>{language === 'vi' ? doc.positionData?.valueVi : doc.positionData?.valueEn} {doc.firstName} {doc.lastName}</div>
-                      <div className='position'>{doc?.doctorInfo?.specialtyData?.name}</div>
+                      <div className='position'>{translateMessage(doc?.doctorInfo?.specialtyData?.name, language)}</div>
                     </div>
                   </div>
                 )

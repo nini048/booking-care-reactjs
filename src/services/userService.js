@@ -71,3 +71,7 @@ export const getAllClinic = () => {
 export const getDoctorsBySpecialty = (specialtyId) => {
   return axios.get(`/api/get-doctors-by-specialty?id=${specialtyId}`)
 }
+export const getDoctorsByClinic = (clinicId) => {
+  return axios.get(`/api/get-doctors-by-clinic?id=${clinicId}`)
+}
+

@@ -7,18 +7,25 @@ import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from 'react-router-dom';
 import { fetchAllClinic } from "../../../store/actions";
+import { translateMessage } from "../../../utils/translateMessage";
 const MedicalFacility = (props) => {
   let { settings } = props
 
   const clinics = useSelector(state => state.admin.clinics)
   const dispatch = useDispatch();
+  const history = useHistory()
+  const language = useSelector(state => state.app.language)
   useEffect(() => {
     const fetchClinic = async () => {
       let res = await dispatch(fetchAllClinic())
     }
     fetchClinic()
   }, [dispatch])
-  console.log('c', clinics)
+  const handleViewDetailClinic = (clinic) => {
+    history.push(`/detail-clinic/${clinic.id}`)
+    console.log('doc: ', clinic)
+  }
+
   return (
     <div className=' section-share section-medical-facility'>
       <div className='section-container'>
@@ -43,7 +50,7 @@ const MedicalFacility = (props) => {
                     className=' img-customize'
                   >
                     <img src={avatarUrl} />
-                    <div>{clinic.name}</div>
+                    <div>{translateMessage(clinic.name, language)}</div>
                   </div>
                 )
               })}

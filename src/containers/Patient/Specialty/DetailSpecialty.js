@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { getDoctorsBySpecialty } from "../../../services/userService";
+import { translateMessage } from "../../../utils/translateMessage";
 import HomeHeader from '../../HomePage/HomeHeader'
 import DoctorSchedule from '../Doctor/DoctorSchedule'
 import './DetailSpecialty.scss'
@@ -27,7 +28,7 @@ const DetailSpecialty = () => {
       <div className="specialty-page container py-4">
 
         <div className="specialty-header text-center mb-5">
-          <h1 className="fw-bold">{specialty.name}</h1>
+          <h1 className="fw-bold">{translateMessage(specialty.name, language)}</h1>
           <img
             src={specialty.image ? `http://localhost:8080/uploads/${specialty.image}` : "/default-avatar.png"}
             alt={specialty.name}
@@ -43,7 +44,9 @@ const DetailSpecialty = () => {
         </div>
 
         <div className="specialty-doctors">
-          <h2 className="fw-semibold mb-4">Bác sĩ trong khoa</h2>
+          <h2 className="fw-semibold mb-4">
+            {translateMessage('Doctors in the Department / Bác sĩ trong khoa', language)}
+          </h2>
           <div className="doctor-list">
             {specialty.specialtyData?.map((doc) => (
               <div className="doctor-item card mb-3 shadow-sm" key={doc.id}>
@@ -61,20 +64,19 @@ const DetailSpecialty = () => {
                         {doc.doctorData?.lastName} {doc.doctorData?.firstName}
                       </h5>
                       <p className="card-text text-muted">
-                        {doc.doctorData?.positionData?.valueVi}
+                        {language === 'vi'
+                          ? doc.doctorData?.positionData?.valueVi
+                          : doc.doctorData?.positionData?.valueEn}
                       </p>
                       <p
                         className="doctor-description mt-2"
                       />
-                      {doc.doctorData?.markdownData?.description}
+                      {translateMessage(doc.doctorData?.markdownData?.description, language)}
 
                     </div>
                   </div>
                   <div className="col-md-5 text-center">
                     <DoctorSchedule doctorId={doc.doctorId} />
-                    <button className="btn btn-outline-primary btn-sm mt-2">
-                      Xem chi tiết
-                    </button>
                   </div>
                 </div>
               </div>

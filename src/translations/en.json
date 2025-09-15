@@ -40,7 +40,9 @@
     "address": "Address",
     "address-clinic": "Clinic Address",
     "name-clinic": "Clinic Name",
-    "note": "Note"
+    "note": "Note",
+    "clinic": "Clinic",
+    "specialty": "Specialty"
   },
   "doctor-detail": {
     "loading": "Loading doctor info...",

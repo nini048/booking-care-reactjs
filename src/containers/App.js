@@ -25,6 +25,7 @@ import CustomScrollbars from '../components/CustomScrollbars.js'
 import DetailDoctor from "./Patient/Doctor/DetailDoctor";
 import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
 import Doctor from "../routes/Doctor";
+import DetailClinic from "./Patient/Clinic/DetailClinic";
 const App = ({ persistor, onBeforeLift }) => {
   const [bootstrapped, setBootstrapped] = useState(false);
 
@@ -77,6 +78,7 @@ const App = ({ persistor, onBeforeLift }) => {
                 <Route path={path.HOMEPAGE} component={HomePage} />
                 <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                 <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
+                <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
                 <Route path="/confirm-booking" component={ConfirmBooking} />
               </Switch>
 

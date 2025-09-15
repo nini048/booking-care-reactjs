@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllSpecialty } from "../../../store/actions";
 
 import { Redirect, useHistory } from 'react-router-dom';
+import { translateMessage } from "../../../utils/translateMessage";
 const Specialty = (props) => {
   let { settings } = props
   const specialties = useSelector(state => state.admin.specialties)
@@ -49,7 +50,7 @@ const Specialty = (props) => {
                     onClick={() => { handleViewDetailSpecialty(spec) }}
                   >
                     <img src={avatarUrl} />
-                    <div>{spec.name}</div>
+                    <div>{translateMessage(spec.name, language)}</div>
                   </div>
                 )
               })}

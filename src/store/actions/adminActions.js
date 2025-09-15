@@ -243,6 +243,27 @@ export const fetchDoctorsBySpecialty = (specialtyId) => {
   }
 }
 
+export const fetchDoctorsByClinic = (clinicId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: actionTypes.FETCH_DOCTORS_BY_CLINIC_START });
+      let res = await getDoctorsBySpecialty(clinicId);
+      if (res && res.errorCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_DOCTORS_BY_CLINIC_SUCCESS,
+          data: res
+        });
+
+      } else {
+        dispatch({ type: actionTypes.FETCH_DOCTORS_BY_CLINIC_FAILED });
+      }
+      return res;
+    } catch (e) {
+      dispatch({ type: actionTypes.FETCH_DOCTORS_BY_CLINIC_FAILED });
+      return { errorCode: 1, message: 'Fetch doctors by clinic error' };
+    }
+  }
+}
 export const fetchAllSpecialty = () => {
   return async (dispatch) => {
     try {
@@ -282,7 +303,7 @@ export const fetchAllClinic = () => {
       return res;
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ALL_CLINIC_FAILED });
-      return { errorCode: 1, message: 'Fetch specialties error' };
+      return { errorCode: 1, message: 'Fetch clinic error' };
     }
   }
 }

@@ -45,7 +45,7 @@ const ProfileDoctor = ({ doctor }) => {
             <span> {clinicAddress}</span>
           </p>
           <p className="doctor-province">
-            <FormattedMessage id='manage-doctor.province' />
+            <FormattedMessage id='manage-doctor.city' />
             <span> {province}</span>
           </p>
         </div>
