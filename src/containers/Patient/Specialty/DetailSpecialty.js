@@ -1,91 +1,118 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { getDoctorsBySpecialty } from "../../../services/userService";
 import { translateMessage } from "../../../utils/translateMessage";
-import HomeHeader from '../../HomePage/HomeHeader'
-import DoctorSchedule from '../Doctor/DoctorSchedule'
-import './DetailSpecialty.scss'
+import HomeHeader from "../../HomePage/HomeHeader";
+import DoctorSchedule from "../Doctor/DoctorSchedule";
+import "./DetailSpecialty.scss";
 
 const DetailSpecialty = () => {
-  const dispatch = useDispatch();
-  const [specialty, setSpecialty] = useState({});
   const { id } = useParams();
-  const [doctor, setDoctor] = useState({})
-  const language = useSelector(state => state.app.language)
+  const language = useSelector((state) => state.app.language);
+  const [specialty, setSpecialty] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchSpecialty = async () => {
-      const res = await getDoctorsBySpecialty(id);
-      if (res && res.data) setSpecialty(res.data);
+      try {
+        setIsLoading(true);
+        const res = await getDoctorsBySpecialty(id);
+        if (res?.data) {
+          setSpecialty(res.data);
+        }
+      } catch (error) {
+        console.error("Error fetching specialty:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchSpecialty();
-  }, [dispatch, id]);
+  }, [id]);
 
   return (
     <>
       <HomeHeader isShowBanner={false} />
+      <div className="specialty-page container">
+        {isLoading ? (
+          <div className="loading-spinner">Loading...</div>
+        ) : (
+          <>
+            <section className="specialty-page__header">
+              <h1 className="specialty-page__title">
+                {specialty?.name ? translateMessage(specialty.name, language) : "Specialty"}
+              </h1>
+              <img
+                src={
+                  specialty?.image
+                    ? `http://localhost:8080/uploads/${specialty.image}`
+                    : "/default-specialty.png"
+                }
+                alt={specialty?.name || "Specialty Image"}
+                className="specialty-page__image"
+              />
+            </section>
 
-      <div className="specialty-page container py-4">
+            <section className="specialty-page__description">
+              {specialty?.contentHTML ? (
+                <div
+                  className="markdown-content"
+                  dangerouslySetInnerHTML={{ __html: specialty.contentHTML }}
+                />
+              ) : (
+                <p>No description available.</p>
+              )}
+            </section>
 
-        <div className="specialty-header text-center mb-5">
-          <h1 className="fw-bold">{translateMessage(specialty.name, language)}</h1>
-          <img
-            src={specialty.image ? `http://localhost:8080/uploads/${specialty.image}` : "/default-avatar.png"}
-            alt={specialty.name}
-            className="img-fluid rounded shadow-sm mt-3 specialty-image"
-          />
-        </div>
-
-        <div className="specialty-description mb-5">
-          <div
-            className="markdown-body"
-            dangerouslySetInnerHTML={{ __html: specialty.contentHTML }}
-          />
-        </div>
-
-        <div className="specialty-doctors">
-          <h2 className="fw-semibold mb-4">
-            {translateMessage('Doctors in the Department / Bác sĩ trong khoa', language)}
-          </h2>
-          <div className="doctor-list">
-            {specialty.specialtyData?.map((doc) => (
-              <div className="doctor-item card mb-3 shadow-sm" key={doc.id}>
-                <div className="row g-0 align-items-center">
-                  <div className="col-md-2 text-center">
-                    <img
-                      src={doc.doctorData?.image ? `http://localhost:8080/uploads/${doc.doctorData.image}` : "/default-avatar.png"}
-                      alt={doc.doctorData?.firstName}
-                      className="img-fluid rounded doctor-avatar"
-                    />
-                  </div>
-                  <div className="col-md-5">
-                    <div className="card-body">
-                      <h5 className="card-title fw-bold">
-                        {doc.doctorData?.lastName} {doc.doctorData?.firstName}
-                      </h5>
-                      <p className="card-text text-muted">
-                        {language === 'vi'
-                          ? doc.doctorData?.positionData?.valueVi
-                          : doc.doctorData?.positionData?.valueEn}
-                      </p>
-                      <p
-                        className="doctor-description mt-2"
-                      />
-                      {translateMessage(doc.doctorData?.markdownData?.description, language)}
-
+            <section className="specialty-page__doctors">
+              <h2 className="specialty-page__subtitle">
+                {translateMessage("Doctors in the Department", language)}
+              </h2>
+              <div className="doctor-list">
+                {specialty?.specialtyData?.length > 0 ? (
+                  specialty.specialtyData.map((doc) => (
+                    <div className="doctor-item" key={doc.id}>
+                      <div className="doctor-item__content">
+                        <div className="doctor-item__avatar-container">
+                          <img
+                            src={
+                              doc.doctorData?.image
+                                ? `http://localhost:8080/uploads/${doc.doctorData.image}`
+                                : "/default-avatar.png"
+                            }
+                            alt={`${doc.doctorData?.firstName || "Doctor"} ${doc.doctorData?.lastName || ""}`}
+                            className="doctor-item__avatar"
+                          />
+                        </div>
+                        <div className="doctor-item__info">
+                          <h3 className="doctor-item__name">
+                            {doc.doctorData?.lastName} {doc.doctorData?.firstName}
+                          </h3>
+                          <p className="doctor-item__position">
+                            {language === "vi"
+                              ? doc.doctorData?.positionData?.valueVi
+                              : doc.doctorData?.positionData?.valueEn}
+                          </p>
+                          <p className="doctor-item__description">
+                            {translateMessage(doc.doctorData?.markdownData?.description, language) ||
+                              "No description available."}
+                          </p>
+                        </div>
+                        <div className="doctor-item__schedule">
+                          <DoctorSchedule doctorId={doc.doctorId} />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-5 text-center">
-                    <DoctorSchedule doctorId={doc.doctorId} />
-                  </div>
-                </div>
+                  ))
+                ) : (
+                  <p>No doctors found for this specialty.</p>
+                )}
               </div>
-            ))}
-          </div>
-        </div>
+            </section>
+          </>
+        )}
       </div>
     </>
-
   );
 };
 

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const Home = () => {
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
-  const linkToRedirect = isLoggedIn ? '/system/user-redux' : '/home';
+  const linkToRedirect = isLoggedIn ? '/system/manage-user' : '/home';
 
   const history = useHistory()
   return <Redirect to={linkToRedirect} />;

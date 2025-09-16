@@ -48,6 +48,7 @@ const MedicalFacility = (props) => {
 
                   <div key={index}
                     className=' img-customize'
+                    onClick={() => { handleViewDetailClinic(clinic) }}
                   >
                     <img src={avatarUrl} />
                     <div>{translateMessage(clinic.name, language)}</div>
