@@ -132,6 +132,7 @@
 
   // SEARCH
   .search {
+    position: relative;
     display: flex;
     align-items: center;
     border-radius: 30px;
@@ -143,6 +144,32 @@
 
     &:focus-within {
       box-shadow: 0 0 10px rgba(30, 136, 229, 0.3);
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 120%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ccc;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 1000;
+      border-radius: 4px;
+
+      .dropdown-item {
+        padding: 10px 16px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #333;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+          background-color: #1e88e5;
+          color: #fff;
+        }
+      }
     }
 
     input {

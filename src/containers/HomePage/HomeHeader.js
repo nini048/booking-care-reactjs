@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './HomeHeader.scss'
@@ -17,13 +17,15 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const HomeHeader = (props) => {
   const { isShowBanner } = props
   const intl = useIntl();
-
+  const specialties = useSelector(state => state.admin.specialties)
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   console.log(useSelector((state) => state.user))
   const language = useSelector((state) => state.app.language)
   const linkToRedirect = isLoggedIn ? '/system/user-manage' : '/home';
   const history = useHistory()
   const dispatch = useDispatch();
+  const [search, setSearch] = useState('')
+  const [showDropdown, setShowDropdown] = useState(false)
   const changeLanguage = (language) => {
     dispatch({
       type: 'CHANGE_LANGUAGE',
@@ -40,6 +42,15 @@ const HomeHeader = (props) => {
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
+  const handleSearch = (e) => {
+    setSearch(e.target.value)
+    setShowDropdown(true)
+
+  }
+  const filterSearch = specialties.filter(specialty =>
+
+    specialty.name.toLowerCase().includes(search.toLowerCase())
+  )
   return (
     <React.Fragment>
       <div className='home-header-container'>
@@ -102,7 +113,10 @@ const HomeHeader = (props) => {
 
           <div className='right-content'>
             <div className='support'>
-              <FaRegQuestionCircle size={18} cursor='pointer' />
+              <FaRegQuestionCircle size={18}
+                cursor='pointer'
+              />
+
               <FormattedMessage id='home-header.support' />
             </div>
             <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}>
@@ -126,7 +140,30 @@ const HomeHeader = (props) => {
           <div className='search'>
             <FaSearch />
             <input type='text'
-              placeholder={intl.formatMessage({ id: 'search.placeholder' })} />
+              placeholder={intl.formatMessage({ id: 'search.placeholder' })}
+              value={search}
+              onChange={(e) => { handleSearch(e) }}
+              onBlur={() => setTimeout(() => setShowDropdown(false), 100)}
+            />
+
+            {showDropdown && filterSearch.length > 0 && (
+              <ul className='dropdown'>
+                {filterSearch.map(specialty => (
+                  <li
+                    key={specialty.id}
+                    onClick={() => {
+                      setSearch(specialty.name);
+                      setShowDropdown(false);
+                      history.push(`/detail-specialty/${specialty.id}`)
+
+                    }}
+                    className="dropdown-item"
+                  >
+                    {specialty.name}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className='options'>
             <div className='option-child'>
